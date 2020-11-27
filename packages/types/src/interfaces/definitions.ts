@@ -61,3 +61,6 @@ export { default as childstate } from './childstate/definitions';
 export { default as offchain } from './offchain/definitions';
 export { default as payment } from './payment/definitions';
 export { default as state } from './state/definitions';
+
+// ctt definitions
+export { default as kp } from './kp/definitions';

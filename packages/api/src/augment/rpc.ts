@@ -13,6 +13,7 @@ import type { ContractCallRequest, ContractExecResult } from '@polkadot/types/in
 import type { CreatedBlock } from '@polkadot/types/interfaces/engine';
 import type { Extrinsic } from '@polkadot/types/interfaces/extrinsics';
 import type { EncodedFinalityProofs, JustificationNotification, ReportedRoundStates } from '@polkadot/types/interfaces/grandpa';
+import type { LeaderBoardResult, PowerSize, QueryCommodityPowerParams, QueryLeaderBoardParams } from '@polkadot/types/interfaces/kp';
 import type { StorageKind } from '@polkadot/types/interfaces/offchain';
 import type { RuntimeDispatchInfo } from '@polkadot/types/interfaces/payment';
 import type { RpcMethods } from '@polkadot/types/interfaces/rpc';
@@ -147,6 +148,28 @@ declare module '@polkadot/rpc-core/types.jsonrpc' {
        * Subscribes to grandpa justifications
        **/
       subscribeJustifications: AugmentedRpc<() => Observable<JustificationNotification>>;
+    };
+    kp: {
+      /**
+       * Get account knowledge power.
+       **/
+      accountPower: AugmentedRpc<(account: AccountId | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<PowerSize>>;
+      /**
+       * Get commodify knowledge power.
+       **/
+      commodityPower: AugmentedRpc<(query: QueryCommodityPowerParams | { appId?: any; cartId?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<PowerSize>>;
+      /**
+       * Check if commodify knowledge power exist.
+       **/
+      isCommodityPowerExist: AugmentedRpc<(query: QueryCommodityPowerParams | { appId?: any; cartId?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<bool>>;
+      /**
+       * read power leader board result.
+       **/
+      leaderBoardResult: AugmentedRpc<(query: QueryLeaderBoardParams | { appId?: any; modelId?: any; block?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<LeaderBoardResult>>;
+      /**
+       * Get current total knowledge power.
+       **/
+      totalPower: AugmentedRpc<() => Observable<PowerSize>>;
     };
     offchain: {
       /**
