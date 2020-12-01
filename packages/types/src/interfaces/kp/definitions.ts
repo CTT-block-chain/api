@@ -84,6 +84,66 @@ export default {
     AccountID32: 'AccountId',
     AuthAccountId: 'AccountId',
 
+    AppData: {
+      name: 'Vec<u8>',
+      returnRate: 'u32',
+    },
+
+    StableExchangeData: {
+      receiver: 'AccountId',
+      amount: 'BalanceOf',
+      redeemed: 'bool',
+    },
+
+    AppFinancedData: {
+      amount: 'BalanceOf',
+      exchangeRate: 'BalanceOf',
+    },
+
+    CommentMaxRecord: {
+      maxCount: 'PowerSize',
+      maxFee: 'PowerSize',
+      maxPositive: 'PowerSize',
+      maxUnitFee: 'PowerSize'
+    },
+
+    KPProductChooseDataMax: {
+      sellCount: 'PowerSize',
+      tryCount: 'PowerSize'
+    },
+
+    KPProductIdentifyRateMax: {
+      identRate: 'PowerSize',
+      identConsistence: 'PowerSize'
+    },
+
+    CommentWeightData: {
+      account: 'AccountId',
+      position: 'u64',
+      cashCost: 'PowerSize'
+    },
+
+    KPModelCreateDataMax: {
+      producerCount: 'PowerSize',
+      productCount: 'PowerSize'
+    },
+
+    KPProductPublishRateMax: {
+      paraIssueRate: 'PowerSize',
+      selfIssueRate: 'PowerSize'
+    },
+
+    KPProductTryRateMax: {
+      offsetRate: 'PowerSize',
+      trueRate: 'PowerSize'
+    },
+
+    KPCommentAccountRecord: {
+      count: 'PowerSize',
+      fees: 'PowerSize',
+      positiveCount: 'PowerSize'
+    },
+
     KPProductPublishData: {
       paraIssueRate: 'PowerSize',
       selfIssueRate: 'PowerSize'

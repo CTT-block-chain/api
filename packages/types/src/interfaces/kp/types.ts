@@ -1,20 +1,47 @@
 // Auto-generated via `yarn polkadot-types-from-defs`, do not edit
 /* eslint-disable */
 
-import type { Bytes, Enum, Struct, Vec, u32, u64, u8 } from '@polkadot/types';
-import type { AccountId, Hash } from '@polkadot/types/interfaces/runtime';
+import type { Bytes, Enum, Struct, Vec, bool, u32, u64, u8 } from '@polkadot/types';
+import type { AccountId, BalanceOf, Hash } from '@polkadot/types/interfaces/runtime';
 
 /** @name AccountID32 */
 export interface AccountID32 extends AccountId {}
 
+/** @name AppData */
+export interface AppData extends Struct {
+  readonly name: Bytes;
+  readonly returnRate: u32;
+}
+
+/** @name AppFinancedData */
+export interface AppFinancedData extends Struct {
+  readonly amount: BalanceOf;
+  readonly exchangeRate: BalanceOf;
+}
+
 /** @name AuthAccountId */
 export interface AuthAccountId extends AccountId {}
+
+/** @name CommentMaxRecord */
+export interface CommentMaxRecord extends Struct {
+  readonly maxCount: PowerSize;
+  readonly maxFee: PowerSize;
+  readonly maxPositive: PowerSize;
+  readonly maxUnitFee: PowerSize;
+}
 
 /** @name CommentTrend */
 export interface CommentTrend extends Enum {
   readonly isPositive: boolean;
   readonly isNegative: boolean;
   readonly isEmpty: boolean;
+}
+
+/** @name CommentWeightData */
+export interface CommentWeightData extends Struct {
+  readonly account: AccountId;
+  readonly position: u64;
+  readonly cashCost: PowerSize;
 }
 
 /** @name CommodityLeaderBoardData */
@@ -62,6 +89,13 @@ export interface DocumentType extends Enum {
   readonly isUnknown: boolean;
 }
 
+/** @name KPCommentAccountRecord */
+export interface KPCommentAccountRecord extends Struct {
+  readonly count: PowerSize;
+  readonly fees: PowerSize;
+  readonly positiveCount: PowerSize;
+}
+
 /** @name KPCommentDataOf */
 export interface KPCommentDataOf extends Struct {
   readonly appId: u32;
@@ -98,6 +132,12 @@ export interface KPModelCreateData extends Struct {
   readonly productCount: PowerSize;
 }
 
+/** @name KPModelCreateDataMax */
+export interface KPModelCreateDataMax extends Struct {
+  readonly producerCount: PowerSize;
+  readonly productCount: PowerSize;
+}
+
 /** @name KPModelDataOf */
 export interface KPModelDataOf extends Struct {
   readonly appId: u32;
@@ -117,6 +157,12 @@ export interface KPProductChooseData extends Struct {
   readonly tryCount: PowerSize;
 }
 
+/** @name KPProductChooseDataMax */
+export interface KPProductChooseDataMax extends Struct {
+  readonly sellCount: PowerSize;
+  readonly tryCount: PowerSize;
+}
+
 /** @name KPProductIdentifyData */
 export interface KPProductIdentifyData extends Struct {
   readonly goodsPrice: PowerSize;
@@ -125,8 +171,20 @@ export interface KPProductIdentifyData extends Struct {
   readonly cartId: Bytes;
 }
 
+/** @name KPProductIdentifyRateMax */
+export interface KPProductIdentifyRateMax extends Struct {
+  readonly identRate: PowerSize;
+  readonly identConsistence: PowerSize;
+}
+
 /** @name KPProductPublishData */
 export interface KPProductPublishData extends Struct {
+  readonly paraIssueRate: PowerSize;
+  readonly selfIssueRate: PowerSize;
+}
+
+/** @name KPProductPublishRateMax */
+export interface KPProductPublishRateMax extends Struct {
   readonly paraIssueRate: PowerSize;
   readonly selfIssueRate: PowerSize;
 }
@@ -137,6 +195,12 @@ export interface KPProductTryData extends Struct {
   readonly offsetRate: PowerSize;
   readonly trueRate: PowerSize;
   readonly cartId: Bytes;
+}
+
+/** @name KPProductTryRateMax */
+export interface KPProductTryRateMax extends Struct {
+  readonly offsetRate: PowerSize;
+  readonly trueRate: PowerSize;
 }
 
 /** @name LeaderBoardItem */
@@ -203,6 +267,13 @@ export interface QueryModelExpertParams extends Struct {
 /** @name QueryPlatformExpertParams */
 export interface QueryPlatformExpertParams extends Struct {
   readonly appId: u32;
+}
+
+/** @name StableExchangeData */
+export interface StableExchangeData extends Struct {
+  readonly receiver: AccountId;
+  readonly amount: BalanceOf;
+  readonly redeemed: bool;
 }
 
 export type PHANTOM_KP = 'kp';

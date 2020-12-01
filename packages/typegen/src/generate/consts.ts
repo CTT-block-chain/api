@@ -75,6 +75,7 @@ function generateForMeta (meta: Metadata, dest: string, extraTypes: Record<strin
 // Call `generateForMeta()` with current static metadata
 /** @internal */
 export function generateDefaultConsts (dest = 'packages/api/src/augment/consts.ts', data = staticData, extraTypes: Record<string, Record<string, { types: Record<string, any> }>> = {}, isStrict = false): void {
+  return;
   const registry = new TypeRegistry();
 
   registerDefinitions(registry, extraTypes);

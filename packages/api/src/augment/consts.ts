@@ -1,7 +1,7 @@
 // Auto-generated via `yarn polkadot-types-from-chain`, do not edit
 /* eslint-disable */
 
-import type { Vec, u16, u32, u64 } from '@polkadot/types';
+import type { Vec, u16, u32, u64, u8 } from '@polkadot/types';
 import type { Codec } from '@polkadot/types/types';
 import type { Balance, BalanceOf, BlockNumber, LockIdentifier, ModuleId, Moment, Perbill, Percent, Permill, RuntimeDbWeight, Weight } from '@polkadot/types/interfaces/runtime';
 import type { SessionIndex } from '@polkadot/types/interfaces/session';
@@ -52,7 +52,7 @@ declare module '@polkadot/api/types/consts' {
       /**
        * The amount of funds a contract should deposit in order to offset
        * the cost of one byte.
-       * 
+       *
        * Let's suppose the deposit is 1,000 BU (balance units)/byte and the rent is 1 BU/byte/day,
        * then a contract with 1,000,000 BU that uses 1,000 bytes of storage would pay no rent.
        * But if the balance reduced to 500,000 BU and the storage stayed the same at 1,000,
@@ -61,7 +61,7 @@ declare module '@polkadot/api/types/consts' {
       rentDepositOffset: BalanceOf & AugmentedConst<ApiType>;
       /**
        * Number of block delay an extrinsic claim surcharge has.
-       * 
+       *
        * When claim surcharge is called by an extrinsic the rent is checked
        * for current_block - delay
        **/
@@ -69,7 +69,7 @@ declare module '@polkadot/api/types/consts' {
       /**
        * A size offset for an contract. A just created account with untouched storage will have that
        * much of storage from the perspective of the state rent.
-       * 
+       *
        * This is a simple way to ensure that contracts with empty storage eventually get deleted
        * by making them pay rent. This creates an incentive to remove them early in order to save
        * rent.
@@ -93,7 +93,7 @@ declare module '@polkadot/api/types/consts' {
       cooloffPeriod: BlockNumber & AugmentedConst<ApiType>;
       /**
        * The minimum period of locking and the period between a proposal being approved and enacted.
-       * 
+       *
        * It should generally be a little more than the unstake period to ensure that
        * voting stakers have an opportunity to remove themselves from the system in the case where
        * they are on the losing side of a vote.
@@ -133,6 +133,17 @@ declare module '@polkadot/api/types/consts' {
       termDuration: BlockNumber & AugmentedConst<ApiType>;
       votingBond: BalanceOf & AugmentedConst<ApiType>;
     };
+    finalityTracker: {
+      [key: string]: Codec;
+      /**
+       * The delay after which point things become suspicious. Default is 1000.
+       **/
+      reportLatency: BlockNumber & AugmentedConst<ApiType>;
+      /**
+       * The number of recent samples to keep from this chain. Default is 101.
+       **/
+      windowSize: BlockNumber & AugmentedConst<ApiType>;
+    };
     identity: {
       [key: string]: Codec;
       /**
@@ -170,6 +181,42 @@ declare module '@polkadot/api/types/consts' {
        * The deposit needed for reserving an index.
        **/
       deposit: BalanceOf & AugmentedConst<ApiType>;
+    };
+    kp: {
+      [key: string]: Codec;
+      cmPowerAccountAttend: u8 & AugmentedConst<ApiType>;
+      commentCmPowerWeightCost: u8 & AugmentedConst<ApiType>;
+      commentCmPowerWeightCount: u8 & AugmentedConst<ApiType>;
+      commentCmPowerWeightPerCost: u8 & AugmentedConst<ApiType>;
+      commentCmPowerWeightPositive: u8 & AugmentedConst<ApiType>;
+      commentPowerWeight: u8 & AugmentedConst<ApiType>;
+      commentPowerWeightCost: u8 & AugmentedConst<ApiType>;
+      commentPowerWeightCount: u8 & AugmentedConst<ApiType>;
+      commentPowerWeightPerCost: u8 & AugmentedConst<ApiType>;
+      commentPowerWeightPositive: u8 & AugmentedConst<ApiType>;
+      documentChooseWeightSellCount: u8 & AugmentedConst<ApiType>;
+      documentChooseWeightTryCount: u8 & AugmentedConst<ApiType>;
+      documentCmPowerWeightAttend: u8 & AugmentedConst<ApiType>;
+      documentCmPowerWeightContent: u8 & AugmentedConst<ApiType>;
+      documentCmPowerWeightJudge: u8 & AugmentedConst<ApiType>;
+      documentIdentifyWeightCheckRate: u8 & AugmentedConst<ApiType>;
+      documentIdentifyWeightParamsRate: u8 & AugmentedConst<ApiType>;
+      documentModelWeightProducerCount: u8 & AugmentedConst<ApiType>;
+      documentModelWeightProductCount: u8 & AugmentedConst<ApiType>;
+      documentPowerWeightAttend: u8 & AugmentedConst<ApiType>;
+      documentPowerWeightContent: u8 & AugmentedConst<ApiType>;
+      documentPowerWeightJudge: u8 & AugmentedConst<ApiType>;
+      documentPublishWeightParamsRate: u8 & AugmentedConst<ApiType>;
+      documentPublishWeightParamsSelfRate: u8 & AugmentedConst<ApiType>;
+      documentTryWeightBiasRate: u8 & AugmentedConst<ApiType>;
+      documentTryWeightTrueRate: u8 & AugmentedConst<ApiType>;
+      kptExchangeMinRate: BalanceOf & AugmentedConst<ApiType>;
+      modelCreateDeposit: BalanceOf & AugmentedConst<ApiType>;
+      topWeightAccountAttend: u8 & AugmentedConst<ApiType>;
+      topWeightAccountStake: u8 & AugmentedConst<ApiType>;
+      topWeightDocumentIdentify: u8 & AugmentedConst<ApiType>;
+      topWeightDocumentTry: u8 & AugmentedConst<ApiType>;
+      topWeightProductPublish: u8 & AugmentedConst<ApiType>;
     };
     multisig: {
       [key: string]: Codec;
@@ -274,23 +321,23 @@ declare module '@polkadot/api/types/consts' {
       bondingDuration: EraIndex & AugmentedConst<ApiType>;
       /**
        * The number of blocks before the end of the era from which election submissions are allowed.
-       * 
+       *
        * Setting this to zero will disable the offchain compute and only on-chain seq-phragmen will
        * be used.
-       * 
+       *
        * This is bounded by being within the last session. Hence, setting it to a value more than the
        * length of a session will be pointless.
        **/
       electionLookahead: BlockNumber & AugmentedConst<ApiType>;
       /**
        * Maximum number of balancing iterations to run in the offchain submission.
-       * 
+       *
        * If set to 0, balance_solution will not be executed at all.
        **/
       maxIterations: u32 & AugmentedConst<ApiType>;
       /**
        * The maximum number of nominators rewarded for each validator.
-       * 
+       *
        * For each validator only the `$MaxNominatorRewardedPerValidator` biggest stakers can claim
        * their reward. This used to limit the i/o cost for the nominator payout.
        **/
@@ -305,7 +352,7 @@ declare module '@polkadot/api/types/consts' {
       sessionsPerEra: SessionIndex & AugmentedConst<ApiType>;
       /**
        * Number of eras that slashes are deferred by, after computation.
-       * 
+       *
        * This should be less than the bonding duration.
        * Set to 0 if slashes should be applied immediately, without opportunity for
        * intervention.
@@ -361,6 +408,177 @@ declare module '@polkadot/api/types/consts' {
       weightToFee: Vec<WeightToFeeCoefficient> & AugmentedConst<ApiType>;
     };
     treasury: {
+      [key: string]: Codec;
+      /**
+       * Percentage of the curator fee that will be reserved upfront as deposit for bounty curator.
+       **/
+      bountyCuratorDeposit: Permill & AugmentedConst<ApiType>;
+      /**
+       * The amount held on deposit for placing a bounty proposal.
+       **/
+      bountyDepositBase: BalanceOf & AugmentedConst<ApiType>;
+      /**
+       * The delay period for which a bounty beneficiary need to wait before claim the payout.
+       **/
+      bountyDepositPayoutDelay: BlockNumber & AugmentedConst<ApiType>;
+      bountyValueMinimum: BalanceOf & AugmentedConst<ApiType>;
+      /**
+       * Percentage of spare funds (if any) that are burnt per spend period.
+       **/
+      burn: Permill & AugmentedConst<ApiType>;
+      /**
+       * The amount held on deposit per byte within the tip report reason or bounty description.
+       **/
+      dataDepositPerByte: BalanceOf & AugmentedConst<ApiType>;
+      /**
+       * Maximum acceptable reason length.
+       **/
+      maximumReasonLength: u32 & AugmentedConst<ApiType>;
+      /**
+       * The treasury's module id, used for deriving its sovereign account ID.
+       **/
+      moduleId: ModuleId & AugmentedConst<ApiType>;
+      /**
+       * Fraction of a proposal's value that should be bonded in order to place the proposal.
+       * An accepted proposal gets these back. A rejected proposal does not.
+       **/
+      proposalBond: Permill & AugmentedConst<ApiType>;
+      /**
+       * Minimum amount of funds that should be placed in a deposit for making a proposal.
+       **/
+      proposalBondMinimum: BalanceOf & AugmentedConst<ApiType>;
+      /**
+       * Period between successive spends.
+       **/
+      spendPeriod: BlockNumber & AugmentedConst<ApiType>;
+      /**
+       * The period for which a tip remains open after is has achieved threshold tippers.
+       **/
+      tipCountdown: BlockNumber & AugmentedConst<ApiType>;
+      /**
+       * The amount of the final tip which goes to the original reporter of the tip.
+       **/
+      tipFindersFee: Percent & AugmentedConst<ApiType>;
+      /**
+       * The amount held on deposit for placing a tip report.
+       **/
+      tipReportDepositBase: BalanceOf & AugmentedConst<ApiType>;
+    };
+    treasuryFin: {
+      [key: string]: Codec;
+      /**
+       * Percentage of the curator fee that will be reserved upfront as deposit for bounty curator.
+       **/
+      bountyCuratorDeposit: Permill & AugmentedConst<ApiType>;
+      /**
+       * The amount held on deposit for placing a bounty proposal.
+       **/
+      bountyDepositBase: BalanceOf & AugmentedConst<ApiType>;
+      /**
+       * The delay period for which a bounty beneficiary need to wait before claim the payout.
+       **/
+      bountyDepositPayoutDelay: BlockNumber & AugmentedConst<ApiType>;
+      bountyValueMinimum: BalanceOf & AugmentedConst<ApiType>;
+      /**
+       * Percentage of spare funds (if any) that are burnt per spend period.
+       **/
+      burn: Permill & AugmentedConst<ApiType>;
+      /**
+       * The amount held on deposit per byte within the tip report reason or bounty description.
+       **/
+      dataDepositPerByte: BalanceOf & AugmentedConst<ApiType>;
+      /**
+       * Maximum acceptable reason length.
+       **/
+      maximumReasonLength: u32 & AugmentedConst<ApiType>;
+      /**
+       * The treasury's module id, used for deriving its sovereign account ID.
+       **/
+      moduleId: ModuleId & AugmentedConst<ApiType>;
+      /**
+       * Fraction of a proposal's value that should be bonded in order to place the proposal.
+       * An accepted proposal gets these back. A rejected proposal does not.
+       **/
+      proposalBond: Permill & AugmentedConst<ApiType>;
+      /**
+       * Minimum amount of funds that should be placed in a deposit for making a proposal.
+       **/
+      proposalBondMinimum: BalanceOf & AugmentedConst<ApiType>;
+      /**
+       * Period between successive spends.
+       **/
+      spendPeriod: BlockNumber & AugmentedConst<ApiType>;
+      /**
+       * The period for which a tip remains open after is has achieved threshold tippers.
+       **/
+      tipCountdown: BlockNumber & AugmentedConst<ApiType>;
+      /**
+       * The amount of the final tip which goes to the original reporter of the tip.
+       **/
+      tipFindersFee: Percent & AugmentedConst<ApiType>;
+      /**
+       * The amount held on deposit for placing a tip report.
+       **/
+      tipReportDepositBase: BalanceOf & AugmentedConst<ApiType>;
+    };
+    treasuryMod: {
+      [key: string]: Codec;
+      /**
+       * Percentage of the curator fee that will be reserved upfront as deposit for bounty curator.
+       **/
+      bountyCuratorDeposit: Permill & AugmentedConst<ApiType>;
+      /**
+       * The amount held on deposit for placing a bounty proposal.
+       **/
+      bountyDepositBase: BalanceOf & AugmentedConst<ApiType>;
+      /**
+       * The delay period for which a bounty beneficiary need to wait before claim the payout.
+       **/
+      bountyDepositPayoutDelay: BlockNumber & AugmentedConst<ApiType>;
+      bountyValueMinimum: BalanceOf & AugmentedConst<ApiType>;
+      /**
+       * Percentage of spare funds (if any) that are burnt per spend period.
+       **/
+      burn: Permill & AugmentedConst<ApiType>;
+      /**
+       * The amount held on deposit per byte within the tip report reason or bounty description.
+       **/
+      dataDepositPerByte: BalanceOf & AugmentedConst<ApiType>;
+      /**
+       * Maximum acceptable reason length.
+       **/
+      maximumReasonLength: u32 & AugmentedConst<ApiType>;
+      /**
+       * The treasury's module id, used for deriving its sovereign account ID.
+       **/
+      moduleId: ModuleId & AugmentedConst<ApiType>;
+      /**
+       * Fraction of a proposal's value that should be bonded in order to place the proposal.
+       * An accepted proposal gets these back. A rejected proposal does not.
+       **/
+      proposalBond: Permill & AugmentedConst<ApiType>;
+      /**
+       * Minimum amount of funds that should be placed in a deposit for making a proposal.
+       **/
+      proposalBondMinimum: BalanceOf & AugmentedConst<ApiType>;
+      /**
+       * Period between successive spends.
+       **/
+      spendPeriod: BlockNumber & AugmentedConst<ApiType>;
+      /**
+       * The period for which a tip remains open after is has achieved threshold tippers.
+       **/
+      tipCountdown: BlockNumber & AugmentedConst<ApiType>;
+      /**
+       * The amount of the final tip which goes to the original reporter of the tip.
+       **/
+      tipFindersFee: Percent & AugmentedConst<ApiType>;
+      /**
+       * The amount held on deposit for placing a tip report.
+       **/
+      tipReportDepositBase: BalanceOf & AugmentedConst<ApiType>;
+    };
+    treasuryTech: {
       [key: string]: Codec;
       /**
        * Percentage of the curator fee that will be reserved upfront as deposit for bounty curator.
