@@ -21,11 +21,14 @@ import * as society from './society';
 import * as staking from './staking';
 import * as technicalCommittee from './technicalCommittee';
 import * as treasury from './treasury';
+import * as treasuryFin from './treasuryFin';
+import * as treasuryMod from './treasuryMod';
+import * as treasuryTech from './treasuryTech';
 import * as tx from './tx';
 
 export * from './type';
 
-export const derive = { accounts, balances, chain, contracts, council, democracy, elections, imOnline, kp, parachains, session, society, staking, technicalCommittee, treasury, tx };
+export const derive = { accounts, balances, chain, contracts, council, democracy, elections, imOnline, kp, parachains, session, society, staking, technicalCommittee, treasury, treasuryFin, treasuryMod, treasuryTech, tx };
 
 type DeriveSection<Section> = {
   [Method in keyof Section]: Section[Method] extends AnyFunction
@@ -53,7 +56,10 @@ const deriveAvail: Record<string, string[]> = {
   society: ['society'],
   staking: ['staking'],
   technicalCommittee: ['technicalCommittee'],
-  treasury: ['treasury']
+  treasury: ['treasury'],
+  treasuryFin: ['treasuryFin'],
+  treasuryMod: ['treasuryMod'],
+  treasuryTech: ['treasuryTech']
 };
 
 /**
