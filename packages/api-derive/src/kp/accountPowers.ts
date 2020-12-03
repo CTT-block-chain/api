@@ -22,6 +22,21 @@ function retriveCurrent (api: ApiInterfaceRx): Observable<DeriveAccountPowers> {
   );
 }
 
+function retriveSinglePower (api: ApiInterfaceRx, account: AccountId | string): Observable<PowerSize> {
+  const kp = api.query.kp;
+  return kp.minerPowerByAccount<PowerSize>(account).pipe(
+    map((power): PowerSize => {
+      return power;
+    })
+  );
+}
+
 export function accountPowers (instanceId: string, api: ApiInterfaceRx): () => Observable<DeriveAccountPowers> {
   return memo(instanceId, (): Observable<DeriveAccountPowers> => retriveCurrent(api));
+}
+
+export function accountPower (intanceId: string, api: ApiInterfaceRx): (account: AccountId) => Observable<PowerSize> {
+  return memo(intanceId, (account: AccountId): Observable<PowerSize> => {
+    return retriveSinglePower(api, account);
+  });
 }
