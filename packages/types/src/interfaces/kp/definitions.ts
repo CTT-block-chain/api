@@ -76,6 +76,22 @@ export default {
         }
       ],
       type: 'LeaderBoardResult'
+    },
+
+    stakeToVote: {
+      description: 'convert balance to vote weight according accuont kp.',
+      params: [
+        {
+          name: 'params',
+          type: 'StakeToVoteParams'
+        },
+        {
+          name: 'at',
+          type: 'Hash',
+          isOptional: true
+        },
+      ],
+      type: 'StakeToVoteResult'
     }
   },
 
@@ -297,6 +313,15 @@ export default {
       cartIdHash: 'T::Hash',
       power: 'PowerSize',
       owner: 'AccountId'
+    },
+
+    StakeToVoteParams: {
+      account: 'AccountId',
+      stake: 'u64'
+    },
+
+    StakeToVoteResult: {
+      result: 'u64'
     }
   }
 } as Definitions;

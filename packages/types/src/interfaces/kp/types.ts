@@ -276,4 +276,15 @@ export interface StableExchangeData extends Struct {
   readonly redeemed: bool;
 }
 
+/** @name StakeToVoteParams */
+export interface StakeToVoteParams extends Struct {
+  readonly account: AccountId;
+  readonly stake: u64;
+}
+
+/** @name StakeToVoteResult */
+export interface StakeToVoteResult extends Struct {
+  readonly result: u64;
+}
+
 export type PHANTOM_KP = 'kp';

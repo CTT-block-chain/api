@@ -13,7 +13,7 @@ import type { ContractCallRequest, ContractExecResult } from '@polkadot/types/in
 import type { CreatedBlock } from '@polkadot/types/interfaces/engine';
 import type { Extrinsic } from '@polkadot/types/interfaces/extrinsics';
 import type { EncodedFinalityProofs, JustificationNotification, ReportedRoundStates } from '@polkadot/types/interfaces/grandpa';
-import type { LeaderBoardResult, PowerSize, QueryCommodityPowerParams, QueryLeaderBoardParams } from '@polkadot/types/interfaces/kp';
+import type { LeaderBoardResult, PowerSize, QueryCommodityPowerParams, QueryLeaderBoardParams, StakeToVoteParams, StakeToVoteResult } from '@polkadot/types/interfaces/kp';
 import type { StorageKind } from '@polkadot/types/interfaces/offchain';
 import type { RuntimeDispatchInfo } from '@polkadot/types/interfaces/payment';
 import type { RpcMethods } from '@polkadot/types/interfaces/rpc';
@@ -166,6 +166,10 @@ declare module '@polkadot/rpc-core/types.jsonrpc' {
        * read power leader board result.
        **/
       leaderBoardResult: AugmentedRpc<(query: QueryLeaderBoardParams | { appId?: any; modelId?: any; block?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<LeaderBoardResult>>;
+      /**
+       * convert balance to vote weight according accuont kp.
+       **/
+      stakeToVote: AugmentedRpc<(params: StakeToVoteParams | { account?: any; stake?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<StakeToVoteResult>>;
       /**
        * Get current total knowledge power.
        **/
