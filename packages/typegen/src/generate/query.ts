@@ -127,8 +127,12 @@ function generateForMeta (registry: Registry, meta: Metadata, dest: string, extr
 
 // Call `generateForMeta()` with current static metadata
 /** @internal */
-export function generateDefaultQuery (dest = 'packages/api/src/augment/query.ts', data = staticData, extraTypes: Record<string, Record<string, { types: Record<string, any> }>> = {}, isStrict = false): void {
-  return;
+export function generateDefaultQuery (dest = 'packages/api/src/augment/query.ts', data = staticData, extraTypes: Record<string, Record<string, { types: Record<string, any> }>> = {}, isStrict = false, isFromChain = false): void {
+  if (!isFromChain) {
+    console.warn("ctt generateDefaultQuery not from chain ignore");
+    return;
+  }
+
   const registry = new TypeRegistry();
 
   registerDefinitions(registry, extraTypes);

@@ -7,6 +7,18 @@ import type { AccountId, BalanceOf, Hash } from '@polkadot/types/interfaces/runt
 /** @name AccountID32 */
 export interface AccountID32 extends AccountId {}
 
+/** @name AccountStatistics */
+export interface AccountStatistics extends Struct {
+  readonly createCommodityNum: u32;
+  readonly slashCommodityNum: u32;
+  readonly slashKpTotal: u64;
+  readonly commentNum: u32;
+  readonly commentCostTotal: u64;
+  readonly commentCostMax: u64;
+  readonly commentPositiveTrendNum: u32;
+  readonly commentNegativeTrendNum: u32;
+}
+
 /** @name AppData */
 export interface AppData extends Struct {
   readonly name: Bytes;

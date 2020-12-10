@@ -322,6 +322,17 @@ export default {
 
     StakeToVoteResult: {
       result: 'u64'
+    },
+
+    AccountStatistics: {
+      createCommodityNum: 'u32',
+      slashCommodityNum: 'u32',
+      slashKpTotal: 'u64',
+      commentNum: 'u32',
+      commentCostTotal: 'u64',
+      commentCostMax: 'u64',
+      commentPositiveTrendNum: 'u32',
+      commentNegativeTrendNum: 'u32'
     }
   }
 } as Definitions;
