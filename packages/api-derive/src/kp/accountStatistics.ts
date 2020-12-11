@@ -10,6 +10,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { memo } from '../util';
 import { Bytes, u32 } from '@polkadot/types';
 import { DeriveCommodityPower } from '../types';
+import { u8aToString } from '@polkadot/util';
 
 function retriveSingleStatistics (api: ApiInterfaceRx, account: AccountId | string): Observable<AccountStatistics> {
   const kp = api.query.kp;
@@ -24,7 +25,7 @@ function retriveCommodityPower(api: ApiInterfaceRx, appId: u32, commodityId: Byt
   Observable<DeriveCommodityPower> {
   return api.rpc.kp.commodityPower<PowerSize>({appId, cartId: commodityId}).pipe(
     map((power: PowerSize): DeriveCommodityPower => {
-      return {appId, commodityId, power}
+      return {appId, commodityId: u8aToString(commodityId), power}
     })
   );
 }
