@@ -46,6 +46,22 @@ export default {
       type: 'PowerSize'
     },
 
+    documentPower: {
+      description: 'Get document knowledge power.',
+      params: [
+        {
+          name: 'query',
+          type: 'QueryDocumentPowerParams'
+        },
+        {
+          name: 'at',
+          type: 'Hash',
+          isOptional: true
+        }
+      ],
+      type: 'PowerSize'
+    },
+
     isCommodityPowerExist: {
       description: 'Check if commodify knowledge power exist.',
       params: [
@@ -281,6 +297,11 @@ export default {
     QueryCommodityPowerParams: {
       appId: 'u32',
       cartId: 'Bytes'
+    },
+
+    QueryDocumentPowerParams: {
+      appId: 'u32',
+      docId: 'Bytes'
     },
 
     QueryPlatformExpertParams: {

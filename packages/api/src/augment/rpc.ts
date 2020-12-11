@@ -13,7 +13,7 @@ import type { ContractCallRequest, ContractExecResult } from '@polkadot/types/in
 import type { CreatedBlock } from '@polkadot/types/interfaces/engine';
 import type { Extrinsic } from '@polkadot/types/interfaces/extrinsics';
 import type { EncodedFinalityProofs, JustificationNotification, ReportedRoundStates } from '@polkadot/types/interfaces/grandpa';
-import type { LeaderBoardResult, PowerSize, QueryCommodityPowerParams, QueryLeaderBoardParams, StakeToVoteParams, StakeToVoteResult } from '@polkadot/types/interfaces/kp';
+import type { LeaderBoardResult, PowerSize, QueryCommodityPowerParams, QueryDocumentPowerParams, QueryLeaderBoardParams, StakeToVoteParams, StakeToVoteResult } from '@polkadot/types/interfaces/kp';
 import type { StorageKind } from '@polkadot/types/interfaces/offchain';
 import type { RuntimeDispatchInfo } from '@polkadot/types/interfaces/payment';
 import type { RpcMethods } from '@polkadot/types/interfaces/rpc';
@@ -158,6 +158,10 @@ declare module '@polkadot/rpc-core/types.jsonrpc' {
        * Get commodify knowledge power.
        **/
       commodityPower: AugmentedRpc<(query: QueryCommodityPowerParams | { appId?: any; cartId?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<PowerSize>>;
+      /**
+       * Get document knowledge power.
+       **/
+      documentPower: AugmentedRpc<(query: QueryDocumentPowerParams | { appId?: any; docId?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<PowerSize>>;
       /**
        * Check if commodify knowledge power exist.
        **/

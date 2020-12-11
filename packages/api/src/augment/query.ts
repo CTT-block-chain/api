@@ -393,6 +393,8 @@ declare module '@polkadot/api/types/storage' {
     kp: {
       [key: string]: QueryableStorageEntry<ApiType>;
       accountAttendPowerMap: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<PowerSize>> & QueryableStorageEntry<ApiType>;
+      accountCommoditySet: AugmentedQueryDoubleMap<ApiType, (key1: AccountId | string | Uint8Array, key2: u32 | AnyNumber | Uint8Array) => Observable<Vec<Bytes>>> & QueryableStorageEntry<ApiType>;
+      accountDocumentSet: AugmentedQueryDoubleMap<ApiType, (key1: AccountId | string | Uint8Array, key2: u32 | AnyNumber | Uint8Array) => Observable<Vec<Bytes>>> & QueryableStorageEntry<ApiType>;
       accountStatisticsMap: AugmentedQuery<ApiType, (arg: AccountId | string | Uint8Array) => Observable<AccountStatistics>> & QueryableStorageEntry<ApiType>;
       appCommodityCount: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<u32>> & QueryableStorageEntry<ApiType>;
       appFinancedRecord: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<AppFinancedData>> & QueryableStorageEntry<ApiType>;

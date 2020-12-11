@@ -263,6 +263,12 @@ export interface QueryCommodityPowerParams extends Struct {
   readonly cartId: Bytes;
 }
 
+/** @name QueryDocumentPowerParams */
+export interface QueryDocumentPowerParams extends Struct {
+  readonly appId: u32;
+  readonly docId: Bytes;
+}
+
 /** @name QueryLeaderBoardParams */
 export interface QueryLeaderBoardParams extends Struct {
   readonly appId: u32;

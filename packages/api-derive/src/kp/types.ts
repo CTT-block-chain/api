@@ -10,3 +10,9 @@ export interface DeriveCommodityPower {
   commodityId: string;
   power: PowerSize;
 }
+
+export interface DeriveDocumentPower {
+  appId: u32;
+  documentId: string;
+  power: PowerSize;
+}
