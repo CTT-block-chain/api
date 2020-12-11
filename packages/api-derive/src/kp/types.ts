@@ -7,6 +7,6 @@ import { u32, Bytes } from '@polkadot/types';
 export type DeriveAccountPowers = [AccountId, PowerSize][]
 export interface DeriveCommodityPower {
   appId: u32;
-  cartId: Bytes;
+  commodityId: Bytes;
   power: PowerSize;
 }

@@ -3,12 +3,12 @@
  * @description Retrieve account statistics
  */
 
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { ApiInterfaceRx } from '@polkadot/api/types';
-import { AccountId, AccountStatistics} from '@polkadot/types/interfaces';
-import { map } from 'rxjs/operators';
+import { AccountId, AccountStatistics, PowerSize} from '@polkadot/types/interfaces';
+import { map, switchMap } from 'rxjs/operators';
 import { memo } from '../util';
-import { Vec, Bytes, u32 } from '@polkadot/types';
+import { Bytes, u32 } from '@polkadot/types';
 import { DeriveCommodityPower } from '../types';
 
 function retriveSingleStatistics (api: ApiInterfaceRx, account: AccountId | string): Observable<AccountStatistics> {
@@ -20,12 +20,24 @@ function retriveSingleStatistics (api: ApiInterfaceRx, account: AccountId | stri
   );
 }
 
-function retriveCommodities (api: ApiInterfaceRx, account: AccountId | string, appId: u32): Observable<DeriveCommodityPower[]> {
-  return api.query.kp.accountCommoditySet<Bytes[]>(account, appId).pipe(
-    map((sets: Bytes[]): DeriveCommodityPower[] => {
-      let result: DeriveCommodityPower[] = [];
-      return result;
+function retriveCommodityPower(api: ApiInterfaceRx, appId: u32, commodityId: Bytes): 
+  Observable<DeriveCommodityPower> {
+  return api.rpc.kp.commodityPower<PowerSize>({appId, cartId: commodityId}).pipe(
+    map((power: PowerSize): DeriveCommodityPower => {
+      return {appId, commodityId, power}
     })
+  );
+}
+
+function retriveCommodities (api: ApiInterfaceRx, account: AccountId | string, appId: u32): 
+  Observable<DeriveCommodityPower[]> {
+  return api.query.kp.accountCommoditySet<Bytes[]>(account, appId).pipe(
+    switchMap((sets) => 
+      combineLatest(
+        sets.map((commodityId) => retriveCommodityPower(api, appId, commodityId))
+      )
+    ),
+    map((results) => results)
   );
 }
 
@@ -35,8 +47,8 @@ export function accountStatistics (intanceId: string, api: ApiInterfaceRx): (acc
   });
 }
 
-export function accountCommodities (intanceId: string, api: ApiInterfaceRx): (account: AccountId, appId: u32) => Observable<[DeriveCommodityPower]> {
-  return memo(intanceId, (account: AccountId, appId: u32): Observable<[DeriveCommodityPower]> => {
+export function accountCommodities (intanceId: string, api: ApiInterfaceRx): (account: AccountId, appId: u32) => Observable<DeriveCommodityPower[]> {
+  return memo(intanceId, (account: AccountId, appId: u32): Observable<DeriveCommodityPower[]> => {
     return retriveCommodities(api, account, appId);
   });
 }
