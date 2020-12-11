@@ -77,6 +77,12 @@ export interface DocumentPower extends Struct {
   readonly judge: PowerSize;
 }
 
+/** @name DocumentPowerInfo */
+export interface DocumentPowerInfo extends Struct {
+  readonly docType: u8;
+  readonly power: PowerSize;
+}
+
 /** @name DocumentSpecificData */
 export interface DocumentSpecificData extends Enum {
   readonly isProductPublish: boolean;

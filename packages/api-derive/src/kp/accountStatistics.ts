@@ -5,11 +5,11 @@
 
 import { Observable, combineLatest } from 'rxjs';
 import { ApiInterfaceRx } from '@polkadot/api/types';
-import { AccountId, AccountStatistics, PowerSize} from '@polkadot/types/interfaces';
+import { AccountId, AccountStatistics, PowerSize, DocumentPowerInfo} from '@polkadot/types/interfaces';
 import { map, switchMap } from 'rxjs/operators';
 import { memo } from '../util';
 import { Bytes, u32 } from '@polkadot/types';
-import { DeriveCommodityPower } from '../types';
+import { DeriveCommodityPower, DeriveDocumentPower } from '../types';
 import { u8aToString } from '@polkadot/util';
 
 function retriveSingleStatistics (api: ApiInterfaceRx, account: AccountId | string): Observable<AccountStatistics> {
@@ -21,7 +21,7 @@ function retriveSingleStatistics (api: ApiInterfaceRx, account: AccountId | stri
   );
 }
 
-function retriveCommodityPower(api: ApiInterfaceRx, appId: u32, commodityId: Bytes): 
+function retriveCommodityPower(api: ApiInterfaceRx, appId: u32, commodityId: Bytes):
   Observable<DeriveCommodityPower> {
   return api.rpc.kp.commodityPower<PowerSize>({appId, cartId: commodityId}).pipe(
     map((power: PowerSize): DeriveCommodityPower => {
@@ -30,12 +30,33 @@ function retriveCommodityPower(api: ApiInterfaceRx, appId: u32, commodityId: Byt
   );
 }
 
-function retriveCommodities (api: ApiInterfaceRx, account: AccountId | string, appId: u32): 
+function retriveCommodities (api: ApiInterfaceRx, account: AccountId | string, appId: u32):
   Observable<DeriveCommodityPower[]> {
   return api.query.kp.accountCommoditySet<Bytes[]>(account, appId).pipe(
-    switchMap((sets) => 
+    switchMap((sets) =>
       combineLatest(
         sets.map((commodityId) => retriveCommodityPower(api, appId, commodityId))
+      )
+    ),
+    map((results) => results)
+  );
+}
+
+function retriveDocumentPower(api: ApiInterfaceRx, appId: u32, docId: Bytes):
+  Observable<DeriveDocumentPower> {
+  return api.rpc.kp.documentPower<DocumentPowerInfo>({appId, docId}).pipe(
+    map((info: DocumentPowerInfo): DeriveDocumentPower => {
+      return {appId, documentId: u8aToString(docId), power: info.power, documentType: info.docType}
+    })
+  );
+}
+
+function retriveDocuments (api: ApiInterfaceRx, account: AccountId | string, appId: u32):
+  Observable<DeriveDocumentPower[]> {
+  return api.query.kp.accountDocumentSet<Bytes[]>(account, appId).pipe(
+    switchMap((sets) =>
+      combineLatest(
+        sets.map((docId) => retriveDocumentPower(api, appId, docId))
       )
     ),
     map((results) => results)
@@ -51,5 +72,11 @@ export function accountStatistics (intanceId: string, api: ApiInterfaceRx): (acc
 export function accountCommodities (intanceId: string, api: ApiInterfaceRx): (account: AccountId, appId: u32) => Observable<DeriveCommodityPower[]> {
   return memo(intanceId, (account: AccountId, appId: u32): Observable<DeriveCommodityPower[]> => {
     return retriveCommodities(api, account, appId);
+  });
+}
+
+export function accountDocuments (intanceId: string, api: ApiInterfaceRx): (account: AccountId, appId: u32) => Observable<DeriveDocumentPower[]> {
+  return memo(intanceId, (account: AccountId, appId: u32): Observable<DeriveDocumentPower[]> => {
+    return retriveDocuments(api, account, appId);
   });
 }

@@ -59,7 +59,7 @@ export default {
           isOptional: true
         }
       ],
-      type: 'PowerSize'
+      type: 'DocumentPowerInfo'
     },
 
     isCommodityPowerExist: {
@@ -327,6 +327,11 @@ export default {
     LeaderBoardResult: {
       accounts: 'Vec<AccountId>',
       board: 'Vec<LeaderBoardItem>'
+    },
+
+    DocumentPowerInfo: {
+      docType: 'u8',
+      power: 'PowerSize',
     },
 
     CommodityLeaderBoardData: {

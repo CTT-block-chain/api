@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { AccountId, PowerSize } from '@polkadot/types/interfaces';
-import { u32 } from '@polkadot/types';
+import { u8, u32 } from '@polkadot/types';
 
 export type DeriveAccountPowers = [AccountId, PowerSize][]
 export interface DeriveCommodityPower {
@@ -14,5 +14,6 @@ export interface DeriveCommodityPower {
 export interface DeriveDocumentPower {
   appId: u32;
   documentId: string;
+  documentType: u8;
   power: PowerSize;
 }
