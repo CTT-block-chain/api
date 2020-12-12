@@ -401,6 +401,7 @@ declare module '@polkadot/api/types/storage' {
       appIdRange: AugmentedQuery<ApiType, (arg: Bytes | string | Uint8Array) => Observable<u32>> & QueryableStorageEntry<ApiType>;
       appLeaderBoardLastTime: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<BlockNumber>> & QueryableStorageEntry<ApiType>;
       appLeaderBoardRcord: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<LeaderBoardResult>> & QueryableStorageEntry<ApiType>;
+      appLeaderBoardSequenceKeys: AugmentedQuery<ApiType, () => Observable<Vec<ITuple<[u32, BlockNumber, Bytes]>>>> & QueryableStorageEntry<ApiType>;
       appModelCommodityCount: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<u32>> & QueryableStorageEntry<ApiType>;
       appModelCommodityLeaderBoards: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<Vec<CommodityLeaderBoardData>>> & QueryableStorageEntry<ApiType>;
       appModelCount: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<u32>> & QueryableStorageEntry<ApiType>;
