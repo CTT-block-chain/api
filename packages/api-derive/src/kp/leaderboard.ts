@@ -15,7 +15,7 @@ function retriveBoardKeys (api : ApiInterfaceRx): Observable<DeriveLeaderboardKe
   return api.query.kp.appLeaderBoardSequenceKeys().pipe(
     map((keys): DeriveLeaderboardKeys =>
       keys.map((item) => {
-        return [item[0], item[1], u8aToString(item[3] as Bytes)];
+        return [item[0], item[1], u8aToString(item[2] as Bytes)];
       })
     )
   );
