@@ -22,7 +22,7 @@ function retriveBoardKeys (api : ApiInterfaceRx): Observable<DeriveLeaderboardKe
 }
 
 function retriveLeaderboard (api: ApiInterfaceRx, params: DeriveLeaderboardQueryKey): Observable<DeriveLeaderboardData> {
-  return api.rpc.kp.leaderBoardResult({appId: params[0], block: params[1], modelId: params[2]}).pipe(
+  return api.rpc.kp.leaderBoardResult({appId: params[0], modelId: params[2], block: params[1]}).pipe(
     map((result): DeriveLeaderboardData => {
       let converted: DeriveLeaderboardData = {
         accounts: result.accounts,
