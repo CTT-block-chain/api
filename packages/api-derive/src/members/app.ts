@@ -28,7 +28,8 @@ function retrieveApps (api: ApiInterfaceRx): Observable<DeriveAppInfos> {
           appId: key.args[0] as u32,
           appName: u8aToString(appData.name),
           identityAccount: identities[idx],
-          returnRate: appData.returnRate
+          returnRate: appData.returnRate,
+          stake: appData.stake
         };
       })
     )

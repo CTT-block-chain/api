@@ -23,6 +23,7 @@ export interface AccountStatistics extends Struct {
 export interface AppData extends Struct {
   readonly name: Bytes;
   readonly returnRate: u32;
+  readonly stake: Balance;
 }
 
 /** @name AppFinanceDataRPC */

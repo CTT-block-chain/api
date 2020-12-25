@@ -119,6 +119,7 @@ export default {
     AppData: {
       name: 'Vec<u8>',
       returnRate: 'u32',
+      stake: 'Balance'
     },
 
     StableExchangeData: {
