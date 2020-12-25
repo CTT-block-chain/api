@@ -25,7 +25,7 @@ import type { AssetOptions, Owner, PermissionLatest, PermissionVersions, Permiss
 import type { AuthorityIndex, AuthorityList, AuthorityWeight, EncodedFinalityProofs, GrandpaEquivocation, GrandpaEquivocationProof, GrandpaEquivocationValue, GrandpaPrevote, JustificationNotification, KeyOwnerProof, NextAuthority, PendingPause, PendingResume, Precommits, Prevotes, ReportedRoundStates, RoundState, SetId, StoredPendingChange, StoredState } from '@polkadot/types/interfaces/grandpa';
 import type { IdentityFields, IdentityInfo, IdentityInfoAdditional, IdentityJudgement, RegistrarIndex, RegistrarInfo, Registration, RegistrationJudgement } from '@polkadot/types/interfaces/identity';
 import type { AuthIndex, AuthoritySignature, Heartbeat, HeartbeatTo244, OpaqueMultiaddr, OpaqueNetworkState, OpaquePeerId } from '@polkadot/types/interfaces/imOnline';
-import type { AccountID32, AccountStatistics, AppData, AppFinancedData, AuthAccountId, CommentMaxRecord, CommentTrend, CommentWeightData, CommodityLeaderBoardData, CommodityTypeData, DocumentPower, DocumentPowerInfo, DocumentSpecificData, DocumentType, KPCommentAccountRecord, KPCommentDataOf, KPDocumentDataOf, KPModelCreateData, KPModelCreateDataMax, KPModelDataOf, KPProductChooseData, KPProductChooseDataMax, KPProductIdentifyData, KPProductIdentifyRateMax, KPProductPublishData, KPProductPublishRateMax, KPProductTryData, KPProductTryRateMax, LeaderBoardItem, LeaderBoardItemRPC, LeaderBoardResult, LeaderBoardResultRPC, ModelDisputeType, ModelStatus, PowerSize, QueryCommodityPowerParams, QueryDocumentPowerParams, QueryLeaderBoardParams, QueryModelExpertParams, QueryPlatformExpertParams, StableExchangeData, StakeToVoteParams, StakeToVoteResult } from '@polkadot/types/interfaces/kp';
+import type { AccountID32, AccountStatistics, AppData, AppFinanceDataRPC, AppFinanceRecordParams, AppFinancedData, AppFinancedProposalParams, AppFinancedUserExchangeParams, AuthAccountId, CommentMaxRecord, CommentTrend, CommentWeightData, CommodityLeaderBoardData, CommodityTypeData, DocumentPower, DocumentPowerInfo, DocumentSpecificData, DocumentType, KPCommentAccountRecord, KPCommentDataOf, KPDocumentDataOf, KPModelCreateData, KPModelCreateDataMax, KPModelDataOf, KPProductChooseData, KPProductChooseDataMax, KPProductIdentifyData, KPProductIdentifyRateMax, KPProductPublishData, KPProductPublishRateMax, KPProductTryData, KPProductTryRateMax, LeaderBoardItem, LeaderBoardItemRPC, LeaderBoardResult, LeaderBoardResultRPC, ModelDisputeType, ModelStatus, PowerSize, QueryCommodityPowerParams, QueryDocumentPowerParams, QueryLeaderBoardParams, QueryModelExpertParams, QueryPlatformExpertParams, StableExchangeData, StakeToVoteParams, StakeToVoteResult } from '@polkadot/types/interfaces/kp';
 import type { DoubleMapTypeLatest, DoubleMapTypeV10, DoubleMapTypeV11, DoubleMapTypeV12, DoubleMapTypeV9, ErrorMetadataV10, ErrorMetadataV11, ErrorMetadataV12, ErrorMetadataV9, EventMetadataLatest, EventMetadataV10, EventMetadataV11, EventMetadataV12, EventMetadataV9, ExtrinsicMetadataLatest, ExtrinsicMetadataV11, ExtrinsicMetadataV12, FunctionArgumentMetadataLatest, FunctionArgumentMetadataV10, FunctionArgumentMetadataV11, FunctionArgumentMetadataV12, FunctionArgumentMetadataV9, FunctionMetadataLatest, FunctionMetadataV10, FunctionMetadataV11, FunctionMetadataV12, FunctionMetadataV9, MapTypeLatest, MapTypeV10, MapTypeV11, MapTypeV12, MapTypeV9, MetadataAll, MetadataLatest, MetadataV10, MetadataV11, MetadataV12, MetadataV9, ModuleConstantMetadataLatest, ModuleConstantMetadataV10, ModuleConstantMetadataV11, ModuleConstantMetadataV12, ModuleConstantMetadataV9, ModuleMetadataLatest, ModuleMetadataV10, ModuleMetadataV11, ModuleMetadataV12, ModuleMetadataV9, StorageEntryMetadataLatest, StorageEntryMetadataV10, StorageEntryMetadataV11, StorageEntryMetadataV12, StorageEntryMetadataV9, StorageEntryModifierLatest, StorageEntryModifierV10, StorageEntryModifierV11, StorageEntryModifierV12, StorageEntryModifierV9, StorageEntryTypeLatest, StorageEntryTypeV10, StorageEntryTypeV11, StorageEntryTypeV12, StorageEntryTypeV9, StorageHasher, StorageHasherV10, StorageHasherV11, StorageHasherV12, StorageHasherV9, StorageMetadataLatest, StorageMetadataV10, StorageMetadataV11, StorageMetadataV12, StorageMetadataV9 } from '@polkadot/types/interfaces/metadata';
 import type { StorageKind } from '@polkadot/types/interfaces/offchain';
 import type { DeferredOffenceOf, Kind, OffenceDetails, Offender, OpaqueTimeSlot, ReportIdOf, Reporter } from '@polkadot/types/interfaces/offences';
@@ -1862,9 +1862,6 @@ declare module '@polkadot/types/types/registry' {
     StableExchangeData: StableExchangeData;
     'Option<StableExchangeData>': Option<StableExchangeData>;
     'Vec<StableExchangeData>': Vec<StableExchangeData>;
-    AppFinancedData: AppFinancedData;
-    'Option<AppFinancedData>': Option<AppFinancedData>;
-    'Vec<AppFinancedData>': Vec<AppFinancedData>;
     CommentMaxRecord: CommentMaxRecord;
     'Option<CommentMaxRecord>': Option<CommentMaxRecord>;
     'Vec<CommentMaxRecord>': Vec<CommentMaxRecord>;
@@ -1976,5 +1973,20 @@ declare module '@polkadot/types/types/registry' {
     AccountStatistics: AccountStatistics;
     'Option<AccountStatistics>': Option<AccountStatistics>;
     'Vec<AccountStatistics>': Vec<AccountStatistics>;
+    AppFinancedProposalParams: AppFinancedProposalParams;
+    'Option<AppFinancedProposalParams>': Option<AppFinancedProposalParams>;
+    'Vec<AppFinancedProposalParams>': Vec<AppFinancedProposalParams>;
+    AppFinancedUserExchangeParams: AppFinancedUserExchangeParams;
+    'Option<AppFinancedUserExchangeParams>': Option<AppFinancedUserExchangeParams>;
+    'Vec<AppFinancedUserExchangeParams>': Vec<AppFinancedUserExchangeParams>;
+    AppFinanceRecordParams: AppFinanceRecordParams;
+    'Option<AppFinanceRecordParams>': Option<AppFinanceRecordParams>;
+    'Vec<AppFinanceRecordParams>': Vec<AppFinanceRecordParams>;
+    AppFinancedData: AppFinancedData;
+    'Option<AppFinancedData>': Option<AppFinancedData>;
+    'Vec<AppFinancedData>': Vec<AppFinancedData>;
+    AppFinanceDataRPC: AppFinanceDataRPC;
+    'Option<AppFinanceDataRPC>': Option<AppFinanceDataRPC>;
+    'Vec<AppFinanceDataRPC>': Vec<AppFinanceDataRPC>;
   }
 }

@@ -67,14 +67,5 @@ export default {
     }
   },
 
-  types: {
-    QueryPlatformExpertParams: {
-      appId: 'u32'
-    },
-
-    QueryModelExpertParams: {
-      appId: 'u32',
-      modelId: 'Bytes'
-    }
-  }
+  types: {}
 } as Definitions;

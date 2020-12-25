@@ -13,7 +13,7 @@ import type { ContractCallRequest, ContractExecResult } from '@polkadot/types/in
 import type { CreatedBlock } from '@polkadot/types/interfaces/engine';
 import type { Extrinsic } from '@polkadot/types/interfaces/extrinsics';
 import type { EncodedFinalityProofs, JustificationNotification, ReportedRoundStates } from '@polkadot/types/interfaces/grandpa';
-import type { DocumentPowerInfo, LeaderBoardResult, PowerSize, QueryCommodityPowerParams, QueryDocumentPowerParams, QueryLeaderBoardParams, StakeToVoteParams, StakeToVoteResult } from '@polkadot/types/interfaces/kp';
+import type { DocumentPowerInfo, LeaderBoardResult, PowerSize, QueryCommodityPowerParams, QueryDocumentPowerParams, QueryLeaderBoardParams, QueryModelExpertParams, QueryPlatformExpertParams, StakeToVoteParams, StakeToVoteResult } from '@polkadot/types/interfaces/kp';
 import type { StorageKind } from '@polkadot/types/interfaces/offchain';
 import type { RuntimeDispatchInfo } from '@polkadot/types/interfaces/payment';
 import type { RpcMethods } from '@polkadot/types/interfaces/rpc';
@@ -178,6 +178,20 @@ declare module '@polkadot/rpc-core/types.jsonrpc' {
        * Get current total knowledge power.
        **/
       totalPower: AugmentedRpc<() => Observable<PowerSize>>;
+    };
+    members: {
+      /**
+       * check if account be model creator
+       **/
+      isModelCreator: AugmentedRpc<(account: AccountId | string | Uint8Array, query: QueryModelExpertParams | { appId?: any; modelId?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<bool>>;
+      /**
+       * check if account be model expert
+       **/
+      isModelExpert: AugmentedRpc<(account: AccountId | string | Uint8Array, query: QueryModelExpertParams | { appId?: any; modelId?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<bool>>;
+      /**
+       * check if account be platform expert
+       **/
+      isPlatformExpert: AugmentedRpc<(account: AccountId | string | Uint8Array, query: QueryPlatformExpertParams | { appId?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<bool>>;
     };
     offchain: {
       /**

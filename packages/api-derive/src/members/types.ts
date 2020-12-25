@@ -1,7 +1,7 @@
 // Copyright 2017-2020 @polkadot/api-derive authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { AccountId, Balance } from '@polkadot/types/interfaces';
+import { AccountId } from '@polkadot/types/interfaces';
 import { Vec, u32 } from '@polkadot/types';
 
 export interface DeriveAppInfo {
@@ -9,7 +9,6 @@ export interface DeriveAppInfo {
   appName: string,
   identityAccount: AccountId,
   adminAccount: AccountId,
-  staking: Balance,
   returnRate: u32,
 }
 

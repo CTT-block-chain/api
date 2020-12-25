@@ -15,6 +15,7 @@ export * from './parachains/types';
 export * from './session/types';
 export * from './staking/types';
 export * from './kp/types';
+export * from './members/types';
 
 export interface DeriveBalancesAccount {
   accountId: AccountId;

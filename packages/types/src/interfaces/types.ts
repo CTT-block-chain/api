@@ -49,3 +49,4 @@ export * from './offchain/types';
 export * from './payment/types';
 export * from './state/types';
 export * from './kp/types';
+export * from './members/types';

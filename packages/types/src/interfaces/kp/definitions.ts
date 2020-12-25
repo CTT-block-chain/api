@@ -127,11 +127,6 @@ export default {
       redeemed: 'bool',
     },
 
-    AppFinancedData: {
-      amount: 'BalanceOf',
-      exchangeRate: 'BalanceOf',
-    },
-
     CommentMaxRecord: {
       maxCount: 'PowerSize',
       maxFee: 'PowerSize',
@@ -359,6 +354,41 @@ export default {
       commentCostMax: 'u64',
       commentPositiveTrendNum: 'u32',
       commentNegativeTrendNum: 'u32'
+    },
+
+    AppFinancedProposalParams: {
+      account: 'AccountId',
+      appId: 'u32',
+      proposalId: 'Vec<u8>',
+      exchange: 'Balance',
+      amount: 'Balance'
+    },
+
+    AppFinancedUserExchangeParams: {
+      account: 'AccountId',
+      appId: 'u32',
+      proposalId: 'Vec<u8>',
+      exchangeAmount: 'Balance'
+    },
+
+    AppFinanceRecordParams: {
+      appId: 'u32',
+      proposalId: 'Bytes'
+    },
+
+    AppFinancedData: {
+      amount: 'Balance',
+      exchange: 'Balance',
+      block: 'BlockNumber',
+      totalBalance: 'Balance'
+    },
+
+    AppFinanceDataRPC: {
+      amount: 'u64',
+      exchange: 'u64',
+      block: 'BlockNumber',
+      totalBalance: 'u64',
+      exchanged: 'u64'
     }
   }
 } as Definitions;

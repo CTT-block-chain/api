@@ -2,7 +2,7 @@
 /* eslint-disable */
 
 import type { Bytes, Enum, Struct, Vec, bool, u32, u64, u8 } from '@polkadot/types';
-import type { AccountId, BalanceOf, Hash } from '@polkadot/types/interfaces/runtime';
+import type { AccountId, Balance, BalanceOf, BlockNumber, Hash } from '@polkadot/types/interfaces/runtime';
 
 /** @name AccountID32 */
 export interface AccountID32 extends AccountId {}
@@ -25,10 +25,44 @@ export interface AppData extends Struct {
   readonly returnRate: u32;
 }
 
+/** @name AppFinanceDataRPC */
+export interface AppFinanceDataRPC extends Struct {
+  readonly amount: u64;
+  readonly exchange: u64;
+  readonly block: BlockNumber;
+  readonly totalBalance: u64;
+  readonly exchanged: u64;
+}
+
 /** @name AppFinancedData */
 export interface AppFinancedData extends Struct {
-  readonly amount: BalanceOf;
-  readonly exchangeRate: BalanceOf;
+  readonly amount: Balance;
+  readonly exchange: Balance;
+  readonly block: BlockNumber;
+  readonly totalBalance: Balance;
+}
+
+/** @name AppFinancedProposalParams */
+export interface AppFinancedProposalParams extends Struct {
+  readonly account: AccountId;
+  readonly appId: u32;
+  readonly proposalId: Bytes;
+  readonly exchange: Balance;
+  readonly amount: Balance;
+}
+
+/** @name AppFinancedUserExchangeParams */
+export interface AppFinancedUserExchangeParams extends Struct {
+  readonly account: AccountId;
+  readonly appId: u32;
+  readonly proposalId: Bytes;
+  readonly exchangeAmount: Balance;
+}
+
+/** @name AppFinanceRecordParams */
+export interface AppFinanceRecordParams extends Struct {
+  readonly appId: u32;
+  readonly proposalId: Bytes;
 }
 
 /** @name AuthAccountId */

@@ -64,3 +64,4 @@ export { default as state } from './state/definitions';
 
 // ctt definitions
 export { default as kp } from './kp/definitions';
+export { default as members } from './members/definitions';
