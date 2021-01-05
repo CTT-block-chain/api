@@ -282,11 +282,25 @@ export interface LeaderBoardResultRPC extends Struct {
   readonly board: Vec<LeaderBoardItemRPC>;
 }
 
+/** @name ModelCycleIncomeReward */
+export interface ModelCycleIncomeReward extends Struct {
+  readonly account: AccountId;
+  readonly appId: u32;
+  readonly modelId: Bytes;
+  readonly reward: BalanceOf;
+}
+
 /** @name ModelDisputeType */
 export interface ModelDisputeType extends Enum {
   readonly isNoneIntendNormal: boolean;
   readonly isIntendNormal: boolean;
   readonly isSerious: boolean;
+}
+
+/** @name ModelIncomeCurrentStageRPC */
+export interface ModelIncomeCurrentStageRPC extends Struct {
+  readonly stage: u8;
+  readonly left: BlockNumber;
 }
 
 /** @name ModelStatus */

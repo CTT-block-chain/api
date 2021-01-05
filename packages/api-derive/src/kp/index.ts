@@ -4,3 +4,4 @@
 export * from './accountPowers';
 export * from './accountStatistics';
 export * from './leaderboard';
+export * from './modelReward';

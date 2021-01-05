@@ -390,6 +390,18 @@ export default {
       block: 'BlockNumber',
       totalBalance: 'u64',
       exchanged: 'u64'
+    },
+
+    ModelIncomeCurrentStageRPC: {
+      stage: 'u8',
+      left: 'BlockNumber'
+    },
+
+    ModelCycleIncomeReward: {
+      account: 'AccountId',
+      appId: 'u32',
+      modelId: 'Vec<u8>',
+      reward: 'BalanceOf'
     }
   }
 } as Definitions;
