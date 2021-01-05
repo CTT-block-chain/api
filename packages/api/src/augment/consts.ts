@@ -210,7 +210,7 @@ declare module '@polkadot/api/types/consts' {
       documentPublishWeightParamsSelfRate: u8 & AugmentedConst<ApiType>;
       documentTryWeightBiasRate: u8 & AugmentedConst<ApiType>;
       documentTryWeightTrueRate: u8 & AugmentedConst<ApiType>;
-      kptExchangeMinRate: BalanceOf & AugmentedConst<ApiType>;
+      kptExchangeMinRate: Permill & AugmentedConst<ApiType>;
       modelCreateDeposit: BalanceOf & AugmentedConst<ApiType>;
       topWeightAccountAttend: u8 & AugmentedConst<ApiType>;
       topWeightAccountStake: u8 & AugmentedConst<ApiType>;

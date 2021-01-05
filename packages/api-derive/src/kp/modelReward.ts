@@ -7,8 +7,8 @@
 
 import { Observable } from 'rxjs';
 import { ApiInterfaceRx } from '@polkadot/api/types';
-import { ModelCycleIncomeReward, ModelIncomeCurrentStageRPC } from '@polkadot/types/interfaces';
-import { DeriveModelRewardRecords, DeriveModelCycleRewardTime } from '../types';
+import { ModelCycleIncomeReward, ModelIncomeCurrentStageRPC, KPModelDataOf } from '@polkadot/types/interfaces';
+import { DeriveModelRewardRecords, DeriveModelCycleRewardTime, DeriveModelData } from '../types';
 import { map } from 'rxjs/operators';
 import { memo } from '../util';
 import { u8aToString } from '@polkadot/util';
@@ -60,6 +60,22 @@ function currentModelCycleRewardInfo (api: ApiInterfaceRx): Observable<DeriveMod
   );
 }
 
+function modelList (api: ApiInterfaceRx): Observable<DeriveModelData[]> {
+  return api.query.kp.kPModelDataByIdHash.entries<KPModelDataOf>().pipe(
+    map((entries): DeriveModelData[] => {
+      return entries.map(([, data]) => {
+        return {
+          account: data.owner,
+          appId: data.appId,
+          createReward: data.createReward?.toHuman(),
+          modelId: u8aToString(data.modelId),
+          status: data.status.toString()
+        };
+      });
+    })
+  );
+}
+
 export function allRewardsRecord (instanceId: string, api: ApiInterfaceRx): () => Observable<DeriveModelRewardRecords[]> {
   return memo(instanceId, (): Observable<DeriveModelRewardRecords[]> => {
     return retrieveAll(api);
@@ -69,5 +85,11 @@ export function allRewardsRecord (instanceId: string, api: ApiInterfaceRx): () =
 export function modelCycleRewardStage (instanceId: string, api: ApiInterfaceRx): () => Observable<DeriveModelCycleRewardTime> {
   return memo(instanceId, (): Observable<DeriveModelCycleRewardTime> => {
     return currentModelCycleRewardInfo(api);
+  });
+}
+
+export function allModels (instanceId: string, api: ApiInterfaceRx): () => Observable<DeriveModelData[]> {
+  return memo(instanceId, (): Observable<DeriveModelData[]> => {
+    return modelList(api);
   });
 }

@@ -128,62 +128,6 @@ export default {
     AccountID32: 'AccountId',
     AuthAccountId: 'AccountId',
 
-    AppData: {
-      name: 'Vec<u8>',
-      returnRate: 'u32',
-      stake: 'Balance'
-    },
-
-    StableExchangeData: {
-      receiver: 'AccountId',
-      amount: 'BalanceOf',
-      redeemed: 'bool',
-    },
-
-    CommentMaxRecord: {
-      maxCount: 'PowerSize',
-      maxFee: 'PowerSize',
-      maxPositive: 'PowerSize',
-      maxUnitFee: 'PowerSize'
-    },
-
-    KPProductChooseDataMax: {
-      sellCount: 'PowerSize',
-      tryCount: 'PowerSize'
-    },
-
-    KPProductIdentifyRateMax: {
-      identRate: 'PowerSize',
-      identConsistence: 'PowerSize'
-    },
-
-    CommentWeightData: {
-      account: 'AccountId',
-      position: 'u64',
-      cashCost: 'PowerSize'
-    },
-
-    KPModelCreateDataMax: {
-      producerCount: 'PowerSize',
-      productCount: 'PowerSize'
-    },
-
-    KPProductPublishRateMax: {
-      paraIssueRate: 'PowerSize',
-      selfIssueRate: 'PowerSize'
-    },
-
-    KPProductTryRateMax: {
-      offsetRate: 'PowerSize',
-      trueRate: 'PowerSize'
-    },
-
-    KPCommentAccountRecord: {
-      count: 'PowerSize',
-      fees: 'PowerSize',
-      positiveCount: 'PowerSize'
-    },
-
     KPProductPublishData: {
       paraIssueRate: 'PowerSize',
       selfIssueRate: 'PowerSize'
@@ -253,7 +197,7 @@ export default {
         ProductTry: 'KPProductTryData',
         ProductChoose: 'KPProductChooseData',
         ModelCreate: 'KPModelCreateData'
-      }
+      },
     },
 
     KPDocumentDataOf: {
@@ -282,7 +226,8 @@ export default {
       commodityType: 'u32',
       contentHash: 'Hash',
       sender: 'AccountId',
-      owner: 'AuthAccountId'
+      owner: 'AuthAccountId',
+      createReward: 'BalanceOf'
     },
 
     KPCommentDataOf: {
@@ -307,11 +252,6 @@ export default {
       cartId: 'Bytes'
     },
 
-    QueryDocumentPowerParams: {
-      appId: 'u32',
-      docId: 'Bytes'
-    },
-
     QueryPlatformExpertParams: {
       appId: 'u32'
     },
@@ -334,12 +274,7 @@ export default {
 
     LeaderBoardResult: {
       accounts: 'Vec<AccountId>',
-      board: 'Vec<LeaderBoardItem>'
-    },
-
-    DocumentPowerInfo: {
-      docType: 'u8',
-      power: 'PowerSize',
+      board: 'Vec<LeaderBoardItem>',
     },
 
     CommodityLeaderBoardData: {
@@ -356,17 +291,6 @@ export default {
 
     StakeToVoteResult: {
       result: 'u64'
-    },
-
-    AccountStatistics: {
-      createCommodityNum: 'u32',
-      slashCommodityNum: 'u32',
-      slashKpTotal: 'u64',
-      commentNum: 'u32',
-      commentCostTotal: 'u64',
-      commentCostMax: 'u64',
-      commentPositiveTrendNum: 'u32',
-      commentNegativeTrendNum: 'u32'
     },
 
     AppFinancedProposalParams: {
@@ -389,11 +313,32 @@ export default {
       proposalId: 'Bytes'
     },
 
+    AppFinanceExchangeDataParams: {
+      appId: 'u32',
+      proposalId: 'Bytes',
+      account: 'AccountId'
+    },
+
+    AppFinanceExchangeDataRPC: {
+      exchangeAmount: 'u64',
+      status: 'u8', // 0: initial state, 1: reserved, 2: received cash and burned
+      payId: 'Bytes'
+    },
+
+    AppFinancedUserExchangeConfirmParams: {
+      account: 'AccountId',
+      appId: 'u32',
+      payId: 'Vec<u8>',
+      proposalId: 'Vec<u8>'
+    },
+
     AppFinancedData: {
       amount: 'Balance',
       exchange: 'Balance',
       block: 'BlockNumber',
-      totalBalance: 'Balance'
+      totalBalance: 'Balance',
+      exchanged: 'Balance',
+      exchangeEndBlock: 'BlockNumber'
     },
 
     AppFinanceDataRPC: {
@@ -401,7 +346,118 @@ export default {
       exchange: 'u64',
       block: 'BlockNumber',
       totalBalance: 'u64',
-      exchanged: 'u64'
+      exchanged: 'u64',
+      exchangeEndBlock: 'BlockNumber'
+    },
+
+    CommentData: {
+      appId: 'u32',
+      documentId: 'Vec<u8>',
+      commentId: 'Vec<u8>',
+      commentHash: 'Hash',
+      commentFee: 'PowerSize',
+      commentTrend: 'u8'
+    },
+
+    AddAppParams: {
+      appType: 'Vec<u8>',
+      appName: 'Vec<u8>',
+      appKey: 'AccountId',
+      appAdminKey: 'AccountId',
+      returnRate: 'u32',
+    },
+
+    ClientParamsCreateModel: {
+      appId: 'u32',
+      expertId: 'Vec<u8>',
+      commodityName: 'Vec<u8>',
+      commodityType: 'u32',
+      contentHash: 'Hash'
+    },
+
+    AuthParamsCreateModel: {
+      modelId: 'Vec<u8>'
+    },
+
+    ClientParamsCreatePublishDoc: {
+      appId: 'u32',
+      documentId: 'Vec<u8>',
+      modelId: 'Vec<u8>',
+      productId: 'Vec<u8>',
+      contentHash: 'Hash',
+      paraIssueRate: 'PowerSize',
+      selfIssueRate: 'PowerSize'
+    },
+
+    ClientParamsCreateIdentifyDoc: {
+      appId: 'u32',
+      documentId: 'Vec<u8>',
+      productId: 'Vec<u8>',
+      contentHash: 'Hash',
+      goodsPrice: 'PowerSize',
+      identRate: 'PowerSize',
+      identConsistence: 'PowerSize',
+      cartId: 'Vec<u8>'
+    },
+
+    ClientParamsCreateTryDoc: {
+      appId: 'u32',
+      documentId: 'Vec<u8>',
+      productId: 'Vec<u8>',
+      contentHash: 'Hash',
+      goodsPrice: 'PowerSize',
+      offsetRate: 'PowerSize',
+      trueRate: 'PowerSize',
+      cartId: 'Vec<u8>'
+    },
+
+    ClientParamsCreateChooseDoc: {
+      appId: 'u32',
+      documentId: 'Vec<u8>',
+      modelId: 'Vec<u8>',
+      productId: 'Vec<u8>',
+      contentHash: 'Hash',
+      sellCount: 'PowerSize',
+      tryCount: 'PowerSize'
+    },
+
+    ClientParamsCreateModelDoc: {
+      appId: 'u32',
+      documentId: 'Vec<u8>',
+      modelId: 'Vec<u8>',
+      productId: 'Vec<u8>',
+      contentHash: 'Hash',
+      producerCount: 'PowerSize',
+      productCount: 'PowerSize'
+    },
+
+    ModelExpertAddMemberParams: {
+      appId: 'u32',
+      modelId: 'Vec<u8>',
+      kptProfitRate: 'u32'
+    },
+
+    ModelExpertDelMemberParams: {
+      appId: 'u32',
+      modelId: 'Vec<u8>',
+      member: 'AccountId'
+    },
+
+    AppData: {
+      name: 'Vec<u8>',
+      returnRate: 'u32',
+      stake: 'Balance'
+    },
+
+    ModelIncome: {
+      modelId: 'Vec<u8>',
+      income: 'u64',
+    },
+
+    ModelIncomeCollectingParam: {
+      appId: 'u32',
+      modelIds: 'Vec<Vec<u8>>',
+      incomes: 'Vec<u64>'
     },
 
     ModelIncomeCurrentStageRPC: {
@@ -414,6 +470,85 @@ export default {
       appId: 'u32',
       modelId: 'Vec<u8>',
       reward: 'BalanceOf'
+    },
+
+    DocumentPowerInfo: {
+      docType: 'DocumentType',
+      power: 'PowerSize'
+    },
+
+    AccountStatistics: {
+      createCommodityNum: 'u32',
+      slashCommodityNum: 'u32',
+      slashKpTotal: 'u64',
+      commentNum: 'u32',
+      commentCostTotal: 'u64',
+      commentCostMax: 'u64',
+      commentPositiveTrendNum: 'u32',
+      commentNegativeTrendNum: 'u32'
+    },
+
+    CommentMaxRecord: {
+      maxCount: 'PowerSize',
+      maxFee: 'PowerSize',
+      maxPositive: 'PowerSize',
+      // for document, this is the max of document's total comment cost/count
+      // for account, this is the max of account's total comment fees/count
+      maxUnitFee: 'PowerSize'
+    },
+
+    CommentWeightData: {
+      account: 'AccountId',
+      position: 'u64',
+      cashCost: 'PowerSize',
+    },
+
+    KPCommentAccountRecord: {
+      count: 'PowerSize',
+      fees: 'PowerSize',
+      positiveCount: 'PowerSize'
+    },
+
+    KPModelCreateDataMax: {
+      producerCount: 'PowerSize',
+      productCount: 'PowerSize'
+    },
+
+    KPProductChooseDataMax: {
+      sellCount: 'PowerSize',
+      tryCount: 'PowerSize'
+    },
+
+    KPProductIdentifyRateMax: {
+      identRate: 'PowerSize',
+      identConsistence: 'PowerSize'
+    },
+
+    KPProductPublishRateMax: {
+      paraIssueRate: 'PowerSize',
+      selfIssueRate: 'PowerSize'
+    },
+
+    KPProductTryRateMax: {
+      offsetRate: 'PowerSize',
+      trueRate: 'PowerSize'
+    },
+
+    StableExchangeData: {
+      receiver: 'AccountId',
+      amount: 'BalanceOf',
+      redeemed: 'bool'
+    },
+
+    AppFinancedUserExchangeData: {
+      exchangeAmount: 'Balance',
+      status: 'u8', // 0: initial state, 1: reserved, 2: received cash and burned
+      payId: 'Vec<u8>'
+    },
+
+    QueryDocumentPowerParams: {
+      appId: 'u32',
+      docId: 'Bytes'
     }
   }
 } as Definitions;

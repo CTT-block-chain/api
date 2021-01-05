@@ -19,6 +19,15 @@ export interface AccountStatistics extends Struct {
   readonly commentNegativeTrendNum: u32;
 }
 
+/** @name AddAppParams */
+export interface AddAppParams extends Struct {
+  readonly appType: Bytes;
+  readonly appName: Bytes;
+  readonly appKey: AccountId;
+  readonly appAdminKey: AccountId;
+  readonly returnRate: u32;
+}
+
 /** @name AppData */
 export interface AppData extends Struct {
   readonly name: Bytes;
@@ -33,6 +42,7 @@ export interface AppFinanceDataRPC extends Struct {
   readonly block: BlockNumber;
   readonly totalBalance: u64;
   readonly exchanged: u64;
+  readonly exchangeEndBlock: BlockNumber;
 }
 
 /** @name AppFinancedData */
@@ -41,6 +51,8 @@ export interface AppFinancedData extends Struct {
   readonly exchange: Balance;
   readonly block: BlockNumber;
   readonly totalBalance: Balance;
+  readonly exchanged: Balance;
+  readonly exchangeEndBlock: BlockNumber;
 }
 
 /** @name AppFinancedProposalParams */
@@ -52,12 +64,41 @@ export interface AppFinancedProposalParams extends Struct {
   readonly amount: Balance;
 }
 
+/** @name AppFinancedUserExchangeConfirmParams */
+export interface AppFinancedUserExchangeConfirmParams extends Struct {
+  readonly account: AccountId;
+  readonly appId: u32;
+  readonly payId: Bytes;
+  readonly proposalId: Bytes;
+}
+
+/** @name AppFinancedUserExchangeData */
+export interface AppFinancedUserExchangeData extends Struct {
+  readonly exchangeAmount: Balance;
+  readonly status: u8;
+  readonly payId: Bytes;
+}
+
 /** @name AppFinancedUserExchangeParams */
 export interface AppFinancedUserExchangeParams extends Struct {
   readonly account: AccountId;
   readonly appId: u32;
   readonly proposalId: Bytes;
   readonly exchangeAmount: Balance;
+}
+
+/** @name AppFinanceExchangeDataParams */
+export interface AppFinanceExchangeDataParams extends Struct {
+  readonly appId: u32;
+  readonly proposalId: Bytes;
+  readonly account: AccountId;
+}
+
+/** @name AppFinanceExchangeDataRPC */
+export interface AppFinanceExchangeDataRPC extends Struct {
+  readonly exchangeAmount: u64;
+  readonly status: u8;
+  readonly payId: Bytes;
 }
 
 /** @name AppFinanceRecordParams */
@@ -68,6 +109,87 @@ export interface AppFinanceRecordParams extends Struct {
 
 /** @name AuthAccountId */
 export interface AuthAccountId extends AccountId {}
+
+/** @name AuthParamsCreateModel */
+export interface AuthParamsCreateModel extends Struct {
+  readonly modelId: Bytes;
+}
+
+/** @name ClientParamsCreateChooseDoc */
+export interface ClientParamsCreateChooseDoc extends Struct {
+  readonly appId: u32;
+  readonly documentId: Bytes;
+  readonly modelId: Bytes;
+  readonly productId: Bytes;
+  readonly contentHash: Hash;
+  readonly sellCount: PowerSize;
+  readonly tryCount: PowerSize;
+}
+
+/** @name ClientParamsCreateIdentifyDoc */
+export interface ClientParamsCreateIdentifyDoc extends Struct {
+  readonly appId: u32;
+  readonly documentId: Bytes;
+  readonly productId: Bytes;
+  readonly contentHash: Hash;
+  readonly goodsPrice: PowerSize;
+  readonly identRate: PowerSize;
+  readonly identConsistence: PowerSize;
+  readonly cartId: Bytes;
+}
+
+/** @name ClientParamsCreateModel */
+export interface ClientParamsCreateModel extends Struct {
+  readonly appId: u32;
+  readonly expertId: Bytes;
+  readonly commodityName: Bytes;
+  readonly commodityType: u32;
+  readonly contentHash: Hash;
+}
+
+/** @name ClientParamsCreateModelDoc */
+export interface ClientParamsCreateModelDoc extends Struct {
+  readonly appId: u32;
+  readonly documentId: Bytes;
+  readonly modelId: Bytes;
+  readonly productId: Bytes;
+  readonly contentHash: Hash;
+  readonly producerCount: PowerSize;
+  readonly productCount: PowerSize;
+}
+
+/** @name ClientParamsCreatePublishDoc */
+export interface ClientParamsCreatePublishDoc extends Struct {
+  readonly appId: u32;
+  readonly documentId: Bytes;
+  readonly modelId: Bytes;
+  readonly productId: Bytes;
+  readonly contentHash: Hash;
+  readonly paraIssueRate: PowerSize;
+  readonly selfIssueRate: PowerSize;
+}
+
+/** @name ClientParamsCreateTryDoc */
+export interface ClientParamsCreateTryDoc extends Struct {
+  readonly appId: u32;
+  readonly documentId: Bytes;
+  readonly productId: Bytes;
+  readonly contentHash: Hash;
+  readonly goodsPrice: PowerSize;
+  readonly offsetRate: PowerSize;
+  readonly trueRate: PowerSize;
+  readonly cartId: Bytes;
+}
+
+/** @name CommentData */
+export interface CommentData extends Struct {
+  readonly appId: u32;
+  readonly documentId: Bytes;
+  readonly commentId: Bytes;
+  readonly commentHash: Hash;
+  readonly commentFee: PowerSize;
+  readonly commentTrend: u8;
+}
 
 /** @name CommentMaxRecord */
 export interface CommentMaxRecord extends Struct {
@@ -114,7 +236,7 @@ export interface DocumentPower extends Struct {
 
 /** @name DocumentPowerInfo */
 export interface DocumentPowerInfo extends Struct {
-  readonly docType: u8;
+  readonly docType: DocumentType;
   readonly power: PowerSize;
 }
 
@@ -202,6 +324,7 @@ export interface KPModelDataOf extends Struct {
   readonly contentHash: Hash;
   readonly sender: AccountId;
   readonly owner: AuthAccountId;
+  readonly createReward: BalanceOf;
 }
 
 /** @name KPProductChooseData */
@@ -295,6 +418,33 @@ export interface ModelDisputeType extends Enum {
   readonly isNoneIntendNormal: boolean;
   readonly isIntendNormal: boolean;
   readonly isSerious: boolean;
+}
+
+/** @name ModelExpertAddMemberParams */
+export interface ModelExpertAddMemberParams extends Struct {
+  readonly appId: u32;
+  readonly modelId: Bytes;
+  readonly kptProfitRate: u32;
+}
+
+/** @name ModelExpertDelMemberParams */
+export interface ModelExpertDelMemberParams extends Struct {
+  readonly appId: u32;
+  readonly modelId: Bytes;
+  readonly member: AccountId;
+}
+
+/** @name ModelIncome */
+export interface ModelIncome extends Struct {
+  readonly modelId: Bytes;
+  readonly income: u64;
+}
+
+/** @name ModelIncomeCollectingParam */
+export interface ModelIncomeCollectingParam extends Struct {
+  readonly appId: u32;
+  readonly modelIds: Vec<Bytes>;
+  readonly incomes: Vec<u64>;
 }
 
 /** @name ModelIncomeCurrentStageRPC */

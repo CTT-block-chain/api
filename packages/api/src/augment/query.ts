@@ -14,7 +14,7 @@ import type { VoteThreshold } from '@polkadot/types/interfaces/elections';
 import type { SetId, StoredPendingChange, StoredState } from '@polkadot/types/interfaces/grandpa';
 import type { RegistrarInfo, Registration } from '@polkadot/types/interfaces/identity';
 import type { AuthIndex } from '@polkadot/types/interfaces/imOnline';
-import type { AccountStatistics, AppData, AppFinancedData, AuthAccountId, CommentMaxRecord, CommentWeightData, CommodityLeaderBoardData, CommodityTypeData, DocumentPower, KPCommentAccountRecord, KPCommentDataOf, KPDocumentDataOf, KPModelCreateDataMax, KPModelDataOf, KPProductChooseDataMax, KPProductIdentifyRateMax, KPProductPublishRateMax, KPProductTryRateMax, LeaderBoardResult, PowerSize, StableExchangeData } from '@polkadot/types/interfaces/kp';
+import type { AccountStatistics, AppData, AppFinancedData, AppFinancedUserExchangeData, AuthAccountId, CommentMaxRecord, CommentWeightData, CommodityLeaderBoardData, CommodityTypeData, DocumentPower, KPCommentAccountRecord, KPCommentDataOf, KPDocumentDataOf, KPModelCreateDataMax, KPModelDataOf, KPProductChooseDataMax, KPProductIdentifyRateMax, KPProductPublishRateMax, KPProductTryRateMax, LeaderBoardResult, ModelCycleIncomeReward, PowerSize, StableExchangeData } from '@polkadot/types/interfaces/kp';
 import type { DeferredOffenceOf, Kind, OffenceDetails, OpaqueTimeSlot, ReportIdOf } from '@polkadot/types/interfaces/offences';
 import type { ProxyAnnouncement, ProxyDefinition } from '@polkadot/types/interfaces/proxy';
 import type { ActiveRecovery, RecoveryConfig } from '@polkadot/types/interfaces/recovery';
@@ -397,8 +397,11 @@ declare module '@polkadot/api/types/storage' {
       accountDocumentSet: AugmentedQueryDoubleMap<ApiType, (key1: AccountId | string | Uint8Array, key2: u32 | AnyNumber | Uint8Array) => Observable<Vec<Bytes>>> & QueryableStorageEntry<ApiType>;
       accountStatisticsMap: AugmentedQuery<ApiType, (arg: AccountId | string | Uint8Array) => Observable<AccountStatistics>> & QueryableStorageEntry<ApiType>;
       appCommodityCount: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<u32>> & QueryableStorageEntry<ApiType>;
-      appFinancedRecord: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<AppFinancedData>> & QueryableStorageEntry<ApiType>;
-      appIdRange: AugmentedQuery<ApiType, (arg: Bytes | string | Uint8Array) => Observable<u32>> & QueryableStorageEntry<ApiType>;
+      appFinancedLast: AugmentedQuery<ApiType, () => Observable<Hash>> & QueryableStorageEntry<ApiType>;
+      appFinancedRecord: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<AppFinancedData>> & QueryableStorageEntry<ApiType>;
+      appFinancedUserExchangeRecord: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<AppFinancedUserExchangeData>> & QueryableStorageEntry<ApiType>;
+      appFinancedUserExchangeSet: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<Vec<AccountId>>> & QueryableStorageEntry<ApiType>;
+      appIdRange: AugmentedQuery<ApiType, (arg: Bytes | string | Uint8Array) => Observable<ITuple<[u32, BalanceOf, u32, u32, u32]>>> & QueryableStorageEntry<ApiType>;
       appLeaderBoardLastTime: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<BlockNumber>> & QueryableStorageEntry<ApiType>;
       appLeaderBoardRcord: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<LeaderBoardResult>> & QueryableStorageEntry<ApiType>;
       appLeaderBoardSequenceKeys: AugmentedQuery<ApiType, () => Observable<Vec<ITuple<[u32, BlockNumber, Bytes]>>>> & QueryableStorageEntry<ApiType>;
@@ -406,7 +409,6 @@ declare module '@polkadot/api/types/storage' {
       appModelCommodityLeaderBoards: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<Vec<CommodityLeaderBoardData>>> & QueryableStorageEntry<ApiType>;
       appModelCount: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<u32>> & QueryableStorageEntry<ApiType>;
       appModelTotalConfig: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<u32>> & QueryableStorageEntry<ApiType>;
-      appYearIncomeTotal: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<u64>> & QueryableStorageEntry<ApiType>;
       authServers: AugmentedQuery<ApiType, () => Observable<Vec<AccountId>>> & QueryableStorageEntry<ApiType>;
       commentMaxInfoPerAccountMap: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<CommentMaxRecord>> & QueryableStorageEntry<ApiType>;
       commentMaxInfoPerDocMap: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<CommentMaxRecord>> & QueryableStorageEntry<ApiType>;
@@ -436,8 +438,12 @@ declare module '@polkadot/api/types/storage' {
       maxGoodsPricePerAccountMap: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<PowerSize>> & QueryableStorageEntry<ApiType>;
       minerDocumentsAccumulationPower: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<DocumentPower>> & QueryableStorageEntry<ApiType>;
       minerPowerByAccount: AugmentedQuery<ApiType, (arg: AccountId | string | Uint8Array) => Observable<PowerSize>> & QueryableStorageEntry<ApiType>;
+      modelCycleIncome: AugmentedQueryDoubleMap<ApiType, (key1: BlockNumber | AnyNumber | Uint8Array, key2: Hash | string | Uint8Array) => Observable<u64>> & QueryableStorageEntry<ApiType>;
+      modelCycleIncomeRewardRecords: AugmentedQueryDoubleMap<ApiType, (key1: BlockNumber | AnyNumber | Uint8Array, key2: Hash | string | Uint8Array) => Observable<BalanceOf>> & QueryableStorageEntry<ApiType>;
+      modelCycleIncomeRewardStore: AugmentedQuery<ApiType, (arg: BlockNumber | AnyNumber | Uint8Array) => Observable<Vec<ModelCycleIncomeReward>>> & QueryableStorageEntry<ApiType>;
+      modelCycleIncomeTotal: AugmentedQuery<ApiType, (arg: BlockNumber | AnyNumber | Uint8Array) => Observable<u64>> & QueryableStorageEntry<ApiType>;
       modelFirstTypeBenefitRecord: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<bool>> & QueryableStorageEntry<ApiType>;
-      modelYearIncome: AugmentedQueryDoubleMap<ApiType, (key1: u32 | AnyNumber | Uint8Array, key2: Hash | string | Uint8Array) => Observable<u64>> & QueryableStorageEntry<ApiType>;
+      modelIncomeRewardTotal: AugmentedQuery<ApiType, () => Observable<BalanceOf>> & QueryableStorageEntry<ApiType>;
       totalPower: AugmentedQuery<ApiType, () => Observable<PowerSize>> & QueryableStorageEntry<ApiType>;
     };
     members: {
@@ -447,8 +453,6 @@ declare module '@polkadot/api/types/storage' {
       appKeys: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<AccountId>> & QueryableStorageEntry<ApiType>;
       appPlatformExpertMembers: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<Vec<AccountId>>> & QueryableStorageEntry<ApiType>;
       appRedeemAccount: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<AccountId>> & QueryableStorageEntry<ApiType>;
-      councilMembers: AugmentedQuery<ApiType, () => Observable<Vec<AccountId>>> & QueryableStorageEntry<ApiType>;
-      developerMembers: AugmentedQuery<ApiType, () => Observable<Vec<AccountId>>> & QueryableStorageEntry<ApiType>;
       expertMemberProfitRate: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<u32>> & QueryableStorageEntry<ApiType>;
       expertMembers: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<Vec<AccountId>>> & QueryableStorageEntry<ApiType>;
       investorMembers: AugmentedQuery<ApiType, () => Observable<Vec<AccountId>>> & QueryableStorageEntry<ApiType>;
