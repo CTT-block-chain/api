@@ -13,7 +13,7 @@ import type { ContractCallRequest, ContractExecResult } from '@polkadot/types/in
 import type { CreatedBlock } from '@polkadot/types/interfaces/engine';
 import type { Extrinsic } from '@polkadot/types/interfaces/extrinsics';
 import type { EncodedFinalityProofs, JustificationNotification, ReportedRoundStates } from '@polkadot/types/interfaces/grandpa';
-import type { DocumentPowerInfo, LeaderBoardResult, PowerSize, QueryCommodityPowerParams, QueryDocumentPowerParams, QueryLeaderBoardParams, QueryModelExpertParams, QueryPlatformExpertParams, StakeToVoteParams, StakeToVoteResult } from '@polkadot/types/interfaces/kp';
+import type { DocumentPowerInfo, LeaderBoardResult, ModelIncomeCurrentStageRPC, PowerSize, QueryCommodityPowerParams, QueryDocumentPowerParams, QueryLeaderBoardParams, QueryModelExpertParams, QueryPlatformExpertParams, StakeToVoteParams, StakeToVoteResult } from '@polkadot/types/interfaces/kp';
 import type { StorageKind } from '@polkadot/types/interfaces/offchain';
 import type { RuntimeDispatchInfo } from '@polkadot/types/interfaces/payment';
 import type { RpcMethods } from '@polkadot/types/interfaces/rpc';
@@ -170,6 +170,10 @@ declare module '@polkadot/rpc-core/types.jsonrpc' {
        * read power leader board result.
        **/
       leaderBoardResult: AugmentedRpc<(query: QueryLeaderBoardParams | { appId?: any; modelId?: any; block?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<LeaderBoardResult>>;
+      /**
+       * get current model income/reward stage.
+       **/
+      modelIncomeCurrentStage: AugmentedRpc<(at?: Hash | string | Uint8Array) => Observable<ModelIncomeCurrentStageRPC>>;
       /**
        * convert balance to vote weight according accuont kp.
        **/

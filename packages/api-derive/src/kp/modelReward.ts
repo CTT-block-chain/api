@@ -7,8 +7,8 @@
 
 import { Observable } from 'rxjs';
 import { ApiInterfaceRx } from '@polkadot/api/types';
-import { ModelCycleIncomeReward } from '@polkadot/types/interfaces';
-import { DeriveModelRewardRecords } from '../types';
+import { ModelCycleIncomeReward, ModelIncomeCurrentStageRPC } from '@polkadot/types/interfaces';
+import { DeriveModelRewardRecords, DeriveModelCycleRewardTime } from '../types';
 import { map } from 'rxjs/operators';
 import { memo } from '../util';
 import { u8aToString } from '@polkadot/util';
@@ -49,8 +49,25 @@ function retrieveAll (api: ApiInterfaceRx): Observable<DeriveModelRewardRecords[
   );
 }
 
+function currentModelCycleRewardInfo (api: ApiInterfaceRx): Observable<DeriveModelCycleRewardTime> {
+  return api.rpc.kp.modelIncomeCurrentStage<ModelIncomeCurrentStageRPC>().pipe(
+    map((info: ModelIncomeCurrentStageRPC): DeriveModelCycleRewardTime => {
+      return {
+        leftSeconds: Number(info.left.toString()) * 6,
+        stage: info.stage
+      };
+    })
+  );
+}
+
 export function allRewardsRecord (instanceId: string, api: ApiInterfaceRx): () => Observable<DeriveModelRewardRecords[]> {
   return memo(instanceId, (): Observable<DeriveModelRewardRecords[]> => {
     return retrieveAll(api);
+  });
+}
+
+export function modelCycleRewardStage (instanceId: string, api: ApiInterfaceRx): () => Observable<DeriveModelCycleRewardTime> {
+  return memo(instanceId, (): Observable<DeriveModelCycleRewardTime> => {
+    return currentModelCycleRewardInfo(api);
   });
 }

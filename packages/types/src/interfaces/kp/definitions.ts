@@ -108,6 +108,18 @@ export default {
         },
       ],
       type: 'StakeToVoteResult'
+    },
+
+    modelIncomeCurrentStage: {
+      description: 'get current model income/reward stage.',
+      params: [
+        {
+          name: 'at',
+          type: 'Hash',
+          isOptional: true
+        }
+      ],
+      type: 'ModelIncomeCurrentStageRPC',
     }
   },
 

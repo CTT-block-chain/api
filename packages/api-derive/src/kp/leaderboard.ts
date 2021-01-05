@@ -1,3 +1,5 @@
+// Copyright 2020 @polkadot/api-derive authors & contributors
+// SPDX-License-Identifier: Apache-2.0
 
 /**
  * @description Retrieve power leaderboard info
@@ -33,9 +35,10 @@ function retriveLeaderboard (api: ApiInterfaceRx, params: DeriveLeaderboardQuery
         converted.board.push({
           commodityId: u8aToString(item.cartId),
           power: item.power,
-          owner: item.owner,
+          owner: item.owner
         });
       });
+
       return converted;
     })
   );
