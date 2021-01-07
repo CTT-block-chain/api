@@ -512,4 +512,31 @@ export interface StakeToVoteResult extends Struct {
   readonly result: u64;
 }
 
+/** @name TechFundWithdrawData */
+export interface TechFundWithdrawData extends Struct {
+  readonly account: AccountId;
+  readonly amount: BalanceOf;
+  readonly devLevel: TechFundWithdrawLevel;
+  readonly devType: TechFundWithdrawType;
+  readonly reason: Hash;
+}
+
+/** @name TechFundWithdrawLevel */
+export interface TechFundWithdrawLevel extends Enum {
+  readonly isLv1: boolean;
+  readonly isLv2: boolean;
+  readonly isLv3: boolean;
+  readonly isLv4: boolean;
+  readonly isLv5: boolean;
+}
+
+/** @name TechFundWithdrawType */
+export interface TechFundWithdrawType extends Enum {
+  readonly isChainDev: boolean;
+  readonly isTctp: boolean;
+  readonly isModel: boolean;
+  readonly isKnowledge: boolean;
+  readonly isChainAdmin: boolean;
+}
+
 export type PHANTOM_KP = 'kp';

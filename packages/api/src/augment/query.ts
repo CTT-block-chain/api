@@ -14,7 +14,7 @@ import type { VoteThreshold } from '@polkadot/types/interfaces/elections';
 import type { SetId, StoredPendingChange, StoredState } from '@polkadot/types/interfaces/grandpa';
 import type { RegistrarInfo, Registration } from '@polkadot/types/interfaces/identity';
 import type { AuthIndex } from '@polkadot/types/interfaces/imOnline';
-import type { AccountStatistics, AppData, AppFinancedData, AppFinancedUserExchangeData, AuthAccountId, CommentMaxRecord, CommentWeightData, CommodityLeaderBoardData, CommodityTypeData, DocumentPower, KPCommentAccountRecord, KPCommentDataOf, KPDocumentDataOf, KPModelCreateDataMax, KPModelDataOf, KPProductChooseDataMax, KPProductIdentifyRateMax, KPProductPublishRateMax, KPProductTryRateMax, LeaderBoardResult, ModelCycleIncomeReward, PowerSize, StableExchangeData } from '@polkadot/types/interfaces/kp';
+import type { AccountStatistics, AppData, AppFinancedData, AppFinancedUserExchangeData, AuthAccountId, CommentMaxRecord, CommentWeightData, CommodityLeaderBoardData, CommodityTypeData, DocumentPower, KPCommentAccountRecord, KPCommentDataOf, KPDocumentDataOf, KPModelCreateDataMax, KPModelDataOf, KPProductChooseDataMax, KPProductIdentifyRateMax, KPProductPublishRateMax, KPProductTryRateMax, LeaderBoardResult, ModelCycleIncomeReward, PowerSize, StableExchangeData, TechFundWithdrawData } from '@polkadot/types/interfaces/kp';
 import type { DeferredOffenceOf, Kind, OffenceDetails, OpaqueTimeSlot, ReportIdOf } from '@polkadot/types/interfaces/offences';
 import type { ProxyAnnouncement, ProxyDefinition } from '@polkadot/types/interfaces/proxy';
 import type { ActiveRecovery, RecoveryConfig } from '@polkadot/types/interfaces/recovery';
@@ -446,6 +446,7 @@ declare module '@polkadot/api/types/storage' {
       modelCycleIncomeTotal: AugmentedQuery<ApiType, (arg: BlockNumber | AnyNumber | Uint8Array) => Observable<u64>> & QueryableStorageEntry<ApiType>;
       modelFirstTypeBenefitRecord: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<bool>> & QueryableStorageEntry<ApiType>;
       modelIncomeRewardTotal: AugmentedQuery<ApiType, () => Observable<BalanceOf>> & QueryableStorageEntry<ApiType>;
+      techFundWithdrawRecords: AugmentedQuery<ApiType, () => Observable<Vec<TechFundWithdrawData>>> & QueryableStorageEntry<ApiType>;
       totalPower: AugmentedQuery<ApiType, () => Observable<PowerSize>> & QueryableStorageEntry<ApiType>;
     };
     members: {

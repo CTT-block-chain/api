@@ -238,6 +238,14 @@ export default {
       _enum: ['NoneIntendNormal', 'IntendNormal', 'Serious']
     },
 
+    TechFundWithdrawType: {
+      _enum: ['CHAIN_DEV', 'TCTP', 'MODEL', 'KNOWLEDGE', 'CHAIN_ADMIN']
+    },
+
+    TechFundWithdrawLevel: {
+      _enum: ['LV1', 'LV2', 'LV3', 'LV4', 'LV5']
+    },
+
     DocumentSpecificData: {
       _enum: {
         ProductPublish: 'KPProductPublishData',
@@ -599,6 +607,14 @@ export default {
     QueryDocumentPowerParams: {
       appId: 'u32',
       docId: 'Bytes'
+    },
+
+    TechFundWithdrawData: {
+      account: 'AccountId',
+      amount: 'BalanceOf',
+      devLevel: 'TechFundWithdrawLevel',
+      devType: 'TechFundWithdrawType',
+      reason: 'Hash'
     }
   }
 } as Definitions;
