@@ -47,6 +47,8 @@ export interface AppFinanceDataRPC extends Struct {
 
 /** @name AppFinancedData */
 export interface AppFinancedData extends Struct {
+  readonly appId: u32;
+  readonly proposalId: Bytes;
   readonly amount: Balance;
   readonly exchange: Balance;
   readonly block: BlockNumber;

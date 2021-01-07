@@ -57,3 +57,13 @@ export interface DeriveModelData {
   status: string;
   createReward: string;
 }
+
+export interface DeriveUserExchanges {
+  exchanges: string[];
+}
+
+export interface DeriveAppFinanceCountInfo {
+  count: u32;
+  leftSeconds: number;
+  totalBurn: string;
+}

@@ -13,7 +13,7 @@ import type { ContractCallRequest, ContractExecResult } from '@polkadot/types/in
 import type { CreatedBlock } from '@polkadot/types/interfaces/engine';
 import type { Extrinsic } from '@polkadot/types/interfaces/extrinsics';
 import type { EncodedFinalityProofs, JustificationNotification, ReportedRoundStates } from '@polkadot/types/interfaces/grandpa';
-import type { DocumentPowerInfo, LeaderBoardResult, ModelIncomeCurrentStageRPC, PowerSize, QueryCommodityPowerParams, QueryDocumentPowerParams, QueryLeaderBoardParams, QueryModelExpertParams, QueryPlatformExpertParams, StakeToVoteParams, StakeToVoteResult } from '@polkadot/types/interfaces/kp';
+import type { AppFinanceDataRPC, AppFinanceExchangeDataParams, AppFinanceExchangeDataRPC, AppFinanceRecordParams, DocumentPowerInfo, LeaderBoardResult, ModelIncomeCurrentStageRPC, PowerSize, QueryCommodityPowerParams, QueryDocumentPowerParams, QueryLeaderBoardParams, QueryModelExpertParams, QueryPlatformExpertParams, StakeToVoteParams, StakeToVoteResult } from '@polkadot/types/interfaces/kp';
 import type { StorageKind } from '@polkadot/types/interfaces/offchain';
 import type { RuntimeDispatchInfo } from '@polkadot/types/interfaces/payment';
 import type { RpcMethods } from '@polkadot/types/interfaces/rpc';
@@ -154,6 +154,18 @@ declare module '@polkadot/rpc-core/types.jsonrpc' {
        * Get account knowledge power.
        **/
       accountPower: AugmentedRpc<(account: AccountId | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<PowerSize>>;
+      /**
+       * get app finance exchange record accounts.
+       **/
+      appFinanceExchangeAccounts: AugmentedRpc<(params: AppFinanceRecordParams | { appId?: any; proposalId?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<Vec<AccountId>>>;
+      /**
+       * get app finance exchange data.
+       **/
+      appFinanceExchangeData: AugmentedRpc<(params: AppFinanceExchangeDataParams | { appId?: any; proposalId?: any; account?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<AppFinanceExchangeDataRPC>>;
+      /**
+       * get app finance record.
+       **/
+      appFinanceRecord: AugmentedRpc<(params: AppFinanceRecordParams | { appId?: any; proposalId?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<AppFinanceDataRPC>>;
       /**
        * Get commodify knowledge power.
        **/

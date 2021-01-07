@@ -119,7 +119,55 @@ export default {
           isOptional: true
         }
       ],
-      type: 'ModelIncomeCurrentStageRPC',
+      type: 'ModelIncomeCurrentStageRPC'
+    },
+
+    appFinanceRecord: {
+      description: 'get app finance record.',
+      params: [
+        {
+          name: 'params',
+          type: 'AppFinanceRecordParams'
+        },
+        {
+          name: 'at',
+          type: 'Hash',
+          isOptional: true
+        }
+      ],
+      type: 'AppFinanceDataRPC'
+    },
+
+    appFinanceExchangeAccounts: {
+      description: 'get app finance exchange record accounts.',
+      params: [
+        {
+          name: 'params',
+          type: 'AppFinanceRecordParams'
+        },
+        {
+          name: 'at',
+          type: 'Hash',
+          isOptional: true
+        },
+      ],
+      type: 'Vec<AccountId>'
+    },
+
+    appFinanceExchangeData: {
+      description: 'get app finance exchange data.',
+      params: [
+        {
+          name: 'params',
+          type: 'AppFinanceExchangeDataParams'
+        },
+        {
+          name: 'at',
+          type: 'Hash',
+          isOptional: true
+        },
+      ],
+      type: 'AppFinanceExchangeDataRPC'
     }
   },
 
@@ -333,6 +381,8 @@ export default {
     },
 
     AppFinancedData: {
+      appId: 'u32',
+      proposalId: 'Vec<u8>',
       amount: 'Balance',
       exchange: 'Balance',
       block: 'BlockNumber',
