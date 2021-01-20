@@ -90,7 +90,7 @@ export function appFinanceAccountExchangeRecords (instanceId: string, api: ApiIn
   });
 }
 
-export function appFinanceCountInfo(instanceId: string, api: ApiInterfaceRx): () => Observable<DeriveAppFinanceCountInfo> {
+export function appFinanceCountInfo (instanceId: string, api: ApiInterfaceRx): () => Observable<DeriveAppFinanceCountInfo> {
   return memo(instanceId, (): Observable<DeriveAppFinanceCountInfo> => {
     return countInfo(api);
   });

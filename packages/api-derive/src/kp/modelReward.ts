@@ -35,7 +35,7 @@ function retrieveAll (api: ApiInterfaceRx): Observable<DeriveModelRewardRecords[
               account: value.account,
               appId: value.appId,
               modelId: u8aToString(value.modelId),
-              rewards: [value.reward.toHuman()]
+              rewards: [value.reward.toString()]
             };
           } else {
             // just push rewards
