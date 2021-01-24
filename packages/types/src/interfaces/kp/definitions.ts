@@ -239,7 +239,7 @@ export default {
     },
 
     TechFundWithdrawType: {
-      _enum: ['CHAIN_DEV', 'TCTP', 'MODEL', 'KNOWLEDGE', 'CHAIN_ADMIN']
+      _enum: ['ChainDev', 'Tctp', 'Model', 'Knowledge', 'ChainAdmin']
     },
 
     TechFundWithdrawLevel: {
