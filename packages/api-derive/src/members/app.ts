@@ -6,7 +6,7 @@ import { ApiInterfaceRx } from '@polkadot/api/types';
 import { map, switchMap } from 'rxjs/operators';
 import { memo } from '../util';
 import { DeriveAppInfos } from './types';
-import { u32 } from '@polkadot/types';
+import { Vec, u32 } from '@polkadot/types';
 import { AccountId } from '@polkadot/types/interfaces';
 import { u8aToString } from '@polkadot/util';
 
@@ -15,9 +15,9 @@ function retrieveApps (api: ApiInterfaceRx): Observable<DeriveAppInfos> {
     switchMap((entries) =>
       combineLatest([
         of(entries),
-        api.query.members.appAdmins.multi<AccountId>(
+        api.query.members.appAdmins.multi<Vec<AccountId>>(
           entries.map(([key]): u32 => key.args[0] as u32)),
-        api.query.members.appKeys.multi<AccountId>(
+        api.query.members.appKeys.multi<Vec<AccountId>>(
           entries.map(([key]): u32 => key.args[0] as u32))
       ])
     ),

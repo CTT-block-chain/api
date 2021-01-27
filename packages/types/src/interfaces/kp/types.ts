@@ -109,6 +109,13 @@ export interface AppFinanceRecordParams extends Struct {
   readonly proposalId: Bytes;
 }
 
+/** @name AppKeyManageParams */
+export interface AppKeyManageParams extends Struct {
+  readonly admin: AuthAccountId;
+  readonly appId: u32;
+  readonly member: AccountId;
+}
+
 /** @name AuthAccountId */
 export interface AuthAccountId extends AccountId {}
 
@@ -405,6 +412,12 @@ export interface LeaderBoardResult extends Struct {
 export interface LeaderBoardResultRPC extends Struct {
   readonly accounts: Vec<AccountId>;
   readonly board: Vec<LeaderBoardItemRPC>;
+}
+
+/** @name MiscDocumentPowerParams */
+export interface MiscDocumentPowerParams extends Struct {
+  readonly appId: u32;
+  readonly documentId: Bytes;
 }
 
 /** @name ModelCycleIncomeReward */

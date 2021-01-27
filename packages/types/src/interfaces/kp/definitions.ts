@@ -615,6 +615,17 @@ export default {
       devLevel: 'TechFundWithdrawLevel',
       devType: 'TechFundWithdrawType',
       reason: 'Hash'
+    },
+
+    MiscDocumentPowerParams: {
+      appId: 'u32',
+      documentId: 'Bytes'
+    },
+
+    AppKeyManageParams: {
+      admin: 'AuthAccountId',
+      appId: 'u32',
+      member: 'AccountId'
     }
   }
 } as Definitions;

@@ -12,7 +12,7 @@ import type { Extrinsic, Signature } from '@polkadot/types/interfaces/extrinsics
 import type { GrandpaEquivocationProof, KeyOwnerProof } from '@polkadot/types/interfaces/grandpa';
 import type { IdentityFields, IdentityInfo, IdentityJudgement, RegistrarIndex } from '@polkadot/types/interfaces/identity';
 import type { Heartbeat } from '@polkadot/types/interfaces/imOnline';
-import type { AddAppParams, AppFinancedProposalParams, AppFinancedUserExchangeConfirmParams, AppFinancedUserExchangeParams, AuthAccountId, AuthParamsCreateModel, ClientParamsCreateChooseDoc, ClientParamsCreateIdentifyDoc, ClientParamsCreateModel, ClientParamsCreateModelDoc, ClientParamsCreatePublishDoc, ClientParamsCreateTryDoc, CommentData, ModelDisputeType, ModelExpertAddMemberParams, ModelExpertDelMemberParams, ModelIncomeCollectingParam, TechFundWithdrawLevel, TechFundWithdrawType } from '@polkadot/types/interfaces/kp';
+import type { AddAppParams, AppFinancedProposalParams, AppFinancedUserExchangeConfirmParams, AppFinancedUserExchangeParams, AppKeyManageParams, AuthAccountId, AuthParamsCreateModel, ClientParamsCreateChooseDoc, ClientParamsCreateIdentifyDoc, ClientParamsCreateModel, ClientParamsCreateModelDoc, ClientParamsCreatePublishDoc, ClientParamsCreateTryDoc, CommentData, ModelDisputeType, ModelExpertAddMemberParams, ModelExpertDelMemberParams, ModelIncomeCollectingParam, TechFundWithdrawLevel, TechFundWithdrawType } from '@polkadot/types/interfaces/kp';
 import type { ProxyType } from '@polkadot/types/interfaces/proxy';
 import type { AccountId, AccountIndex, Address, Balance, BalanceOf, BlockNumber, Call, CallHashOf, ChangesTrieConfiguration, Hash, Header, KeyValue, LookupSource, Moment, OpaqueCall, Perbill, Percent, Weight } from '@polkadot/types/interfaces/runtime';
 import type { Period, Priority } from '@polkadot/types/interfaces/scheduler';
@@ -1293,6 +1293,7 @@ declare module '@polkadot/api/types/submittable' {
     };
     kp: {
       [key: string]: SubmittableExtrinsicFunction<ApiType>;
+      addModelDeposit: AugmentedSubmittable<(appId: u32 | AnyNumber | Uint8Array, modelId: Bytes | string | Uint8Array, amount: BalanceOf | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>>;
       appFinancedUserExchangeConfirm: AugmentedSubmittable<(params: AppFinancedUserExchangeConfirmParams | { account?: any; appId?: any; payId?: any; proposalId?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
       appFinancedUserExchangeRequest: AugmentedSubmittable<(params: AppFinancedUserExchangeParams | { account?: any; appId?: any; proposalId?: any; exchangeAmount?: any } | string | Uint8Array, appUserAccount: AuthAccountId | string | Uint8Array, appUserSign: Signature | string | Uint8Array, authServer: AuthAccountId | string | Uint8Array, authSign: Signature | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
       createComment: AugmentedSubmittable<(commentData: CommentData | { appId?: any; documentId?: any; commentId?: any; commentHash?: any; commentFee?: any; commentTrend?: any } | string | Uint8Array, appUserAccount: AuthAccountId | string | Uint8Array, appUserSign: Signature | string | Uint8Array, authServer: AuthAccountId | string | Uint8Array, authSign: Signature | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
@@ -1311,24 +1312,27 @@ declare module '@polkadot/api/types/submittable' {
       democracyAppFinanced: AugmentedSubmittable<(params: AppFinancedProposalParams | { account?: any; appId?: any; proposalId?: any; exchange?: any; amount?: any } | string | Uint8Array, appUserAccount: AuthAccountId | string | Uint8Array, appUserSign: Signature | string | Uint8Array, authServer: AuthAccountId | string | Uint8Array, authSign: Signature | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
       democracyModelDispute: AugmentedSubmittable<(appId: u32 | AnyNumber | Uint8Array, modelId: Bytes | string | Uint8Array, disputeType: ModelDisputeType | 'NoneIntendNormal' | 'IntendNormal' | 'Serious' | number | Uint8Array, commentId: Bytes | string | Uint8Array, reporterAccount: AccountId | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
       democracySlashCommodityPower: AugmentedSubmittable<(appId: u32 | AnyNumber | Uint8Array, cartId: Bytes | string | Uint8Array, commentId: Bytes | string | Uint8Array, reporterAccount: AccountId | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
-      democracyTechFundWithdraw: AugmentedSubmittable<(receiver: AccountId | string | Uint8Array, reason: Hash | string | Uint8Array, devType: TechFundWithdrawType | 'CHAIN_DEV' | 'TCTP' | 'MODEL' | 'KNOWLEDGE' | 'CHAIN_ADMIN' | number | Uint8Array, devLevel: TechFundWithdrawLevel | 'LV1' | 'LV2' | 'LV3' | 'LV4' | 'LV5' | number | Uint8Array) => SubmittableExtrinsic<ApiType>>;
+      democracyTechFundWithdraw: AugmentedSubmittable<(receiver: AccountId | string | Uint8Array, reason: Hash | string | Uint8Array, devType: TechFundWithdrawType | 'ChainDev' | 'Tctp' | 'Model' | 'Knowledge' | 'ChainAdmin' | number | Uint8Array, devLevel: TechFundWithdrawLevel | 'LV1' | 'LV2' | 'LV3' | 'LV4' | 'LV5' | number | Uint8Array) => SubmittableExtrinsic<ApiType>>;
       requestModelReward: AugmentedSubmittable<(appId: u32 | AnyNumber | Uint8Array, modelId: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
       setAppModelTotal: AugmentedSubmittable<(appId: u32 | AnyNumber | Uint8Array, total: u32 | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>>;
       setModelIncome: AugmentedSubmittable<(params: ModelIncomeCollectingParam | { appId?: any; modelIds?: any; incomes?: any } | string | Uint8Array, userKey: AuthAccountId | string | Uint8Array, userSign: Signature | string | Uint8Array, authKey: AuthAccountId | string | Uint8Array, authSign: Signature | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
     };
     members: {
       [key: string]: SubmittableExtrinsicFunction<ApiType>;
+      addAppAdmin: AugmentedSubmittable<(params: AppKeyManageParams | { admin?: any; appId?: any; member?: any } | string | Uint8Array, sign: Signature | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
+      addAppKey: AugmentedSubmittable<(params: AppKeyManageParams | { admin?: any; appId?: any; member?: any } | string | Uint8Array, sign: Signature | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
       addAppPlatformExpertMember: AugmentedSubmittable<(appId: u32 | AnyNumber | Uint8Array, newMember: AccountId | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
       addExpertMember: AugmentedSubmittable<(params: ModelExpertAddMemberParams | { appId?: any; modelId?: any; kptProfitRate?: any } | string | Uint8Array, modelCreator: AuthAccountId | string | Uint8Array, modelCreatorSign: Signature | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
       addInvestorMember: AugmentedSubmittable<(appId: u32 | AnyNumber | Uint8Array, newMember: AccountId | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
       airDropNewUserBenefit: AugmentedSubmittable<(appId: u32 | AnyNumber | Uint8Array, userId: Bytes | string | Uint8Array, receiver: AccountId | string | Uint8Array, amount: BalanceOf | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>>;
+      removeAppAdmin: AugmentedSubmittable<(params: AppKeyManageParams | { admin?: any; appId?: any; member?: any } | string | Uint8Array, sign: Signature | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
+      removeAppKey: AugmentedSubmittable<(params: AppKeyManageParams | { admin?: any; appId?: any; member?: any } | string | Uint8Array, sign: Signature | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
       removeAppPlatformExpertMember: AugmentedSubmittable<(appId: u32 | AnyNumber | Uint8Array, oldMember: AccountId | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
       removeExpertMember: AugmentedSubmittable<(params: ModelExpertDelMemberParams | { appId?: any; modelId?: any; member?: any } | string | Uint8Array, appUserAccount: AuthAccountId | string | Uint8Array, appUserSign: Signature | string | Uint8Array, authServer: AuthAccountId | string | Uint8Array, authSign: Signature | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
       /**
        * Removes a member.
        **/
       removeInvestorMember: AugmentedSubmittable<(appId: u32 | AnyNumber | Uint8Array, oldMember: AccountId | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
-      setAppAdmin: AugmentedSubmittable<(appId: u32 | AnyNumber | Uint8Array, admin: AccountId | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
       setAppRedeemAccount: AugmentedSubmittable<(appId: u32 | AnyNumber | Uint8Array, account: AccountId | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
       stableExchange: AugmentedSubmittable<(amount: BalanceOf | AnyNumber | Uint8Array, receiver: AccountId | string | Uint8Array, appId: u32 | AnyNumber | Uint8Array, cashReceipt: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;
       stableRedeem: AugmentedSubmittable<(appId: u32 | AnyNumber | Uint8Array, cashReceipt: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>>;

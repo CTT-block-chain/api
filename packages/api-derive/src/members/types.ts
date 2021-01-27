@@ -7,8 +7,8 @@ import { Vec, u32 } from '@polkadot/types';
 export interface DeriveAppInfo {
   appId: u32,
   appName: string,
-  identityAccount: AccountId,
-  adminAccount: AccountId,
+  identityAccount: AccountId[],
+  adminAccount: AccountId[],
   returnRate: u32,
   stake: Balance
 }

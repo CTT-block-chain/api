@@ -437,8 +437,7 @@ declare module '@polkadot/api/types/storage' {
       kpPurchaseBlackList: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<bool>> & QueryableStorageEntry<ApiType>;
       kpPurchasePowerByIdHash: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<ITuple<[DocumentPower, DocumentPower, DocumentPower, PowerSize, PowerSize]>>> & QueryableStorageEntry<ApiType>;
       leaderBoardCommoditySet: AugmentedQueryDoubleMap<ApiType, (key1: Hash | string | Uint8Array, key2: Bytes | string | Uint8Array) => Observable<ITuple<[]>>> & QueryableStorageEntry<ApiType>;
-      maxGoodsPricePerAccountMap: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<PowerSize>> & QueryableStorageEntry<ApiType>;
-      minerDocumentsAccumulationPower: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<DocumentPower>> & QueryableStorageEntry<ApiType>;
+      maxGoodsPrice: AugmentedQuery<ApiType, () => Observable<PowerSize>> & QueryableStorageEntry<ApiType>;
       minerPowerByAccount: AugmentedQuery<ApiType, (arg: AccountId | string | Uint8Array) => Observable<PowerSize>> & QueryableStorageEntry<ApiType>;
       modelCycleIncome: AugmentedQueryDoubleMap<ApiType, (key1: BlockNumber | AnyNumber | Uint8Array, key2: Hash | string | Uint8Array) => Observable<u64>> & QueryableStorageEntry<ApiType>;
       modelCycleIncomeRewardRecords: AugmentedQueryDoubleMap<ApiType, (key1: BlockNumber | AnyNumber | Uint8Array, key2: Hash | string | Uint8Array) => Observable<BalanceOf>> & QueryableStorageEntry<ApiType>;
@@ -446,20 +445,21 @@ declare module '@polkadot/api/types/storage' {
       modelCycleIncomeTotal: AugmentedQuery<ApiType, (arg: BlockNumber | AnyNumber | Uint8Array) => Observable<u64>> & QueryableStorageEntry<ApiType>;
       modelFirstTypeBenefitRecord: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<bool>> & QueryableStorageEntry<ApiType>;
       modelIncomeRewardTotal: AugmentedQuery<ApiType, () => Observable<BalanceOf>> & QueryableStorageEntry<ApiType>;
+      modelPreBlackList: AugmentedQuery<ApiType, () => Observable<Vec<ITuple<[u32, Bytes, AccountId, BlockNumber]>>>> & QueryableStorageEntry<ApiType>;
+      modelSlashCycleRewardIndex: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<BlockNumber>> & QueryableStorageEntry<ApiType>;
       techFundWithdrawRecords: AugmentedQuery<ApiType, () => Observable<Vec<TechFundWithdrawData>>> & QueryableStorageEntry<ApiType>;
       totalPower: AugmentedQuery<ApiType, () => Observable<PowerSize>> & QueryableStorageEntry<ApiType>;
     };
     members: {
       [key: string]: QueryableStorageEntry<ApiType>;
-      appAdmins: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<AccountId>> & QueryableStorageEntry<ApiType>;
+      appAdmins: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<Vec<AccountId>>> & QueryableStorageEntry<ApiType>;
       appDataMap: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<AppData>> & QueryableStorageEntry<ApiType>;
-      appKeys: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<AccountId>> & QueryableStorageEntry<ApiType>;
+      appKeys: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<Vec<AccountId>>> & QueryableStorageEntry<ApiType>;
       appPlatformExpertMembers: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<Vec<AccountId>>> & QueryableStorageEntry<ApiType>;
       appRedeemAccount: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<AccountId>> & QueryableStorageEntry<ApiType>;
       expertMemberProfitRate: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<u32>> & QueryableStorageEntry<ApiType>;
       expertMembers: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<Vec<AccountId>>> & QueryableStorageEntry<ApiType>;
       investorMembers: AugmentedQuery<ApiType, () => Observable<Vec<AccountId>>> & QueryableStorageEntry<ApiType>;
-      keyApps: AugmentedQuery<ApiType, (arg: AccountId | string | Uint8Array) => Observable<u32>> & QueryableStorageEntry<ApiType>;
       modelCreators: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<AccountId>> & QueryableStorageEntry<ApiType>;
       newAccountBenefitRecords: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<BalanceOf>> & QueryableStorageEntry<ApiType>;
       stableExchangeRecords: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<StableExchangeData>> & QueryableStorageEntry<ApiType>;
