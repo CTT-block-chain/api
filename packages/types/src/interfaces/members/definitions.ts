@@ -63,7 +63,22 @@ export default {
           isOptional: true
         }
       ],
-      type: 'bool',
+      type: 'bool'
+    },
+    modelExperts: {
+      description: 'load model expert accounts',
+      params: [
+        {
+          name: 'query',
+          type: 'QueryModelExpertParams'
+        },
+        {
+          name: 'at',
+          type: 'Hash',
+          isOptional: true
+        }
+      ],
+      type: 'Vec<AccountId>'
     }
   },
 

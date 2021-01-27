@@ -502,6 +502,12 @@ export interface QueryModelExpertParams extends Struct {
   readonly modelId: Bytes;
 }
 
+/** @name QueryModelParams */
+export interface QueryModelParams extends Struct {
+  readonly appId: u32;
+  readonly modelId: Bytes;
+}
+
 /** @name QueryPlatformExpertParams */
 export interface QueryPlatformExpertParams extends Struct {
   readonly appId: u32;

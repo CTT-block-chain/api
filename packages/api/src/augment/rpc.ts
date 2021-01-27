@@ -13,7 +13,7 @@ import type { ContractCallRequest, ContractExecResult } from '@polkadot/types/in
 import type { CreatedBlock } from '@polkadot/types/interfaces/engine';
 import type { Extrinsic } from '@polkadot/types/interfaces/extrinsics';
 import type { EncodedFinalityProofs, JustificationNotification, ReportedRoundStates } from '@polkadot/types/interfaces/grandpa';
-import type { AppFinanceDataRPC, AppFinanceExchangeDataParams, AppFinanceExchangeDataRPC, AppFinanceRecordParams, DocumentPowerInfo, LeaderBoardResult, ModelIncomeCurrentStageRPC, PowerSize, QueryCommodityPowerParams, QueryDocumentPowerParams, QueryLeaderBoardParams, QueryModelExpertParams, QueryPlatformExpertParams, StakeToVoteParams, StakeToVoteResult } from '@polkadot/types/interfaces/kp';
+import type { AppFinanceDataRPC, AppFinanceExchangeDataParams, AppFinanceExchangeDataRPC, AppFinanceRecordParams, DocumentPowerInfo, LeaderBoardResult, ModelIncomeCurrentStageRPC, PowerSize, QueryCommodityPowerParams, QueryDocumentPowerParams, QueryLeaderBoardParams, QueryModelExpertParams, QueryModelParams, QueryPlatformExpertParams, StakeToVoteParams, StakeToVoteResult } from '@polkadot/types/interfaces/kp';
 import type { StorageKind } from '@polkadot/types/interfaces/offchain';
 import type { RuntimeDispatchInfo } from '@polkadot/types/interfaces/payment';
 import type { RpcMethods } from '@polkadot/types/interfaces/rpc';
@@ -183,6 +183,10 @@ declare module '@polkadot/rpc-core/types.jsonrpc' {
        **/
       leaderBoardResult: AugmentedRpc<(query: QueryLeaderBoardParams | { appId?: any; modelId?: any; block?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<LeaderBoardResult>>;
       /**
+       * get model deposit.
+       **/
+      modelDeposit: AugmentedRpc<(params: QueryModelParams | { appId?: any; modelId?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<u64>>;
+      /**
        * get current model income/reward stage.
        **/
       modelIncomeCurrentStage: AugmentedRpc<(at?: Hash | string | Uint8Array) => Observable<ModelIncomeCurrentStageRPC>>;
@@ -208,6 +212,10 @@ declare module '@polkadot/rpc-core/types.jsonrpc' {
        * check if account be platform expert
        **/
       isPlatformExpert: AugmentedRpc<(account: AccountId | string | Uint8Array, query: QueryPlatformExpertParams | { appId?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<bool>>;
+      /**
+       * load model expert accounts
+       **/
+      modelExperts: AugmentedRpc<(query: QueryModelExpertParams | { appId?: any; modelId?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<Vec<AccountId>>>;
     };
     offchain: {
       /**

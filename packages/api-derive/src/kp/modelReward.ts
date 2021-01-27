@@ -5,11 +5,12 @@
  * @description Retrieve all model cycle income reward records
  */
 
-import { Observable } from 'rxjs';
+import BN from 'bn.js';
+import { Observable, combineLatest, of } from 'rxjs';
 import { ApiInterfaceRx } from '@polkadot/api/types';
 import { ModelCycleIncomeReward, ModelIncomeCurrentStageRPC, KPModelDataOf } from '@polkadot/types/interfaces';
 import { DeriveModelRewardRecords, DeriveModelCycleRewardTime, DeriveModelData } from '../types';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { memo } from '../util';
 import { u8aToString } from '@polkadot/util';
 
@@ -62,17 +63,35 @@ function currentModelCycleRewardInfo (api: ApiInterfaceRx): Observable<DeriveMod
 
 function modelList (api: ApiInterfaceRx): Observable<DeriveModelData[]> {
   return api.query.kp.kPModelDataByIdHash.entries<KPModelDataOf>().pipe(
-    map((entries): DeriveModelData[] => {
-      return entries.map(([, data]) => {
+    switchMap((entries) =>
+      combineLatest([
+        of(entries),
+        combineLatest(
+          entries.map(([, data]) =>
+            api.rpc.kp.modelDeposit({ appId: data.appId, modelId: data.modelId })
+          )
+        ),
+        combineLatest(
+          entries.map(([, data]) =>
+            api.rpc.members.modelExperts({ appId: data.appId, modelId: data.modelId })
+          )
+        )
+      ])
+    ),
+    map(([entries, deposits, experts]) =>
+      entries.map(([, data], idx) => {
         return {
           account: data.owner,
           appId: data.appId,
-          createReward: data.createReward?.toHuman(),
+          commodityName: u8aToString(data.commodityName),
+          createReward: data.createReward.div(new BN(1e14)).toString(),
+          deposit: deposits[idx].div(new BN(10000)).toString(),
+          experts: experts[idx],
           modelId: u8aToString(data.modelId),
           status: data.status.toString()
         };
-      });
-    })
+      })
+    )
   );
 }
 

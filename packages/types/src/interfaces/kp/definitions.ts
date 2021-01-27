@@ -168,6 +168,22 @@ export default {
         },
       ],
       type: 'AppFinanceExchangeDataRPC'
+    },
+
+    modelDeposit: {
+      description: 'get model deposit.',
+      params: [
+        {
+          name: 'params',
+          type: 'QueryModelParams'
+        },
+        {
+          name: 'at',
+          type: 'Hash',
+          isOptional: true
+        }
+      ],
+      type: 'u64'
     }
   },
 
@@ -626,6 +642,11 @@ export default {
       admin: 'AuthAccountId',
       appId: 'u32',
       member: 'AccountId'
+    },
+
+    QueryModelParams: {
+      appId: 'u32',
+      modelId: 'Bytes'
     }
   }
 } as Definitions;
