@@ -5,17 +5,18 @@
  * @description Get app finace related records
  */
 
-import { Observable, combineLatest } from 'rxjs';
+import { Observable, combineLatest, of } from 'rxjs';
 import { ApiInterfaceRx } from '@polkadot/api/types';
 import { Bytes, u32 } from '@polkadot/types';
 import { AccountId, AppFinancedData, AppFinanceExchangeDataRPC, Hash } from '@polkadot/types/interfaces';
 import { map, switchMap } from 'rxjs/operators';
 import { memo } from '../util';
-import { DeriveAppFinanceCountInfo } from '../types';
+import { DeriveAppFinanceCountInfo, DeriveAppFinanceRecord, DeriveAccountFinanceRecord } from '../types';
+import { u8aToString } from '@polkadot/util';
 import BN from 'bn.js';
 
-function accountExchange (api: ApiInterfaceRx, account: AccountId, appId: u32, proposalId: Bytes): Observable<string> {
-  return api.rpc.kp.appFinanceExchangeData<AppFinanceExchangeDataRPC>({appId, proposalId, account}).pipe(
+function accountExchange (api: ApiInterfaceRx, account: AccountId, appId: u32, proposalId: Bytes | string): Observable<string> {
+  return api.rpc.kp.appFinanceExchangeData<AppFinanceExchangeDataRPC>({ appId, proposalId, account }).pipe(
     map((exchange: AppFinanceExchangeDataRPC): string => {
       if (exchange.status.toString() === '2') {
         return exchange.exchangeAmount.div(new BN(10000)).toString();
@@ -84,6 +85,46 @@ function countInfo (api: ApiInterfaceRx): Observable<DeriveAppFinanceCountInfo> 
   }));
 }
 
+function financeRecords (api: ApiInterfaceRx): Observable<DeriveAppFinanceRecord[]> {
+  return api.query.kp.appFinancedRecord.entries().pipe(
+    map((entries): DeriveAppFinanceRecord[] => {
+      return entries.map(([, item]) => {
+        return {
+          amount: item.amount,
+          appId: item.appId,
+          block: item.block,
+          proposalId: u8aToString(item.proposalId),
+          totalBalance: item.totalBalance
+        };
+      });
+    })
+  );
+}
+
+function accountRecord (api: ApiInterfaceRx, account: AccountId, appId: u32, proposalId: string): Observable<DeriveAccountFinanceRecord> {
+  // get app finance record
+  return api.rpc.kp.appFinanceRecord({ appId, proposalId }).pipe(
+    // get user block height finance info
+    switchMap((record) => combineLatest([
+      of(record),
+      api.rpc.chain.getBlockHash(record.block)
+    ])),
+    switchMap(([record, blockHash]) => combineLatest([
+      of(record),
+      api.query.system.account.at(blockHash, account),
+      accountExchange(api, account, appId, proposalId)
+    ])),
+    map(([record, balanceInfo, realExchangeStr]): DeriveAccountFinanceRecord => {
+      const maxAmount = record.exchange.mul(balanceInfo.data.free).div(record.totalBalance);
+
+      return {
+        actuallyAmount: realExchangeStr,
+        maxAmount: maxAmount.div(new BN(1e14)).toString()
+      };
+    })
+  );
+}
+
 export function appFinanceAccountExchangeRecords (instanceId: string, api: ApiInterfaceRx): (account: AccountId) => Observable<string[]> {
   return memo(instanceId, (account: AccountId): Observable<string[]> => {
     return accountRecords(api, account);
@@ -93,5 +134,17 @@ export function appFinanceAccountExchangeRecords (instanceId: string, api: ApiIn
 export function appFinanceCountInfo (instanceId: string, api: ApiInterfaceRx): () => Observable<DeriveAppFinanceCountInfo> {
   return memo(instanceId, (): Observable<DeriveAppFinanceCountInfo> => {
     return countInfo(api);
+  });
+}
+
+export function appFinanceRecords (instanceId: string, api: ApiInterfaceRx): () => Observable<DeriveAppFinanceRecord[]> {
+  return memo(instanceId, (): Observable<DeriveAppFinanceRecord[]> => {
+    return financeRecords(api);
+  });
+}
+
+export function accountFinanceRecord (instanceId: string, api: ApiInterfaceRx): (account: AccountId, appId: u32, proposalId: string) => Observable<DeriveAccountFinanceRecord> {
+  return memo(instanceId, (account: AccountId, appId: u32, proposalId: string): Observable<DeriveAccountFinanceRecord> => {
+    return accountRecord(api, account, appId, proposalId);
   });
 }

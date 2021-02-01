@@ -1,7 +1,7 @@
 // Copyright 2017-2020 @polkadot/api-derive authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { AccountId, PowerSize, BlockNumber, ModelCycleIncomeReward, DocumentType } from '@polkadot/types/interfaces';
+import { AccountId, PowerSize, BlockNumber, ModelCycleIncomeReward, DocumentType, Balance } from '@polkadot/types/interfaces';
 import { u8, u32, Vec } from '@polkadot/types';
 
 export type DeriveAccountPowers = [AccountId, PowerSize][]
@@ -69,4 +69,17 @@ export interface DeriveAppFinanceCountInfo {
   count: u32;
   leftSeconds: number;
   totalBurn: string;
+}
+
+export interface DeriveAppFinanceRecord {
+  appId: u32;
+  block: BlockNumber;
+  proposalId: string;
+  amount: Balance;
+  totalBalance: Balance;
+}
+
+export interface DeriveAccountFinanceRecord {
+  maxAmount: string;
+  actuallyAmount: string;
 }
