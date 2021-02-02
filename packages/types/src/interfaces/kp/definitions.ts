@@ -30,6 +30,22 @@ export default {
       type: 'PowerSize'
     },
 
+    powerRatio: {
+      description: 'Get account knowledge power ratio.',
+      params: [
+        {
+          name: 'account',
+          type: 'AccountId'
+        },
+        {
+          name: 'at',
+          type: 'Hash',
+          isOptional: true
+        }
+      ],
+      type: 'u64'
+    },
+
     commodityPower: {
       description: 'Get commodify knowledge power.',
       params: [

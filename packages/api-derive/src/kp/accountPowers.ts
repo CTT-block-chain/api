@@ -58,3 +58,13 @@ export function stakeToVoteEvulate (intanceId: string, api: ApiInterfaceRx): (ac
     return stakeToVote(api, account, stake);
   });
 }
+
+export function powerRatio (intanceId: string, api: ApiInterfaceRx): (account: AccountId) => Observable<string> {
+  return memo(intanceId, (account: AccountId): Observable<string> => {
+    return api.rpc.kp.powerRatio(account).pipe(
+      map((result): string => {
+        return (Number(result.toString()) / 10000).toString();
+      })
+    );
+  });
+}

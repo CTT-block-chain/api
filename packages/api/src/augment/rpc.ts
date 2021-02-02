@@ -191,6 +191,10 @@ declare module '@polkadot/rpc-core/types.jsonrpc' {
        **/
       modelIncomeCurrentStage: AugmentedRpc<(at?: Hash | string | Uint8Array) => Observable<ModelIncomeCurrentStageRPC>>;
       /**
+       * Get account knowledge power ratio.
+       **/
+      powerRatio: AugmentedRpc<(account: AccountId | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<u64>>;
+      /**
        * convert balance to vote weight according accuont kp.
        **/
       stakeToVote: AugmentedRpc<(params: StakeToVoteParams | { account?: any; stake?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<StakeToVoteResult>>;
