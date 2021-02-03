@@ -63,7 +63,10 @@ export function powerRatio (intanceId: string, api: ApiInterfaceRx): (account: A
   return memo(intanceId, (account: AccountId): Observable<string> => {
     return api.rpc.kp.powerRatio(account).pipe(
       map((result): string => {
-        return (Number(result.toString()) / 10000).toString();
+        const mini = api.consts.balances.existentialDeposit;
+        const ratio = Number(result.toString()) / Number(mini.toString());
+
+        return ratio.toString();
       })
     );
   });
