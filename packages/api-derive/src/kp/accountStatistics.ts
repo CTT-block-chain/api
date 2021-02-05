@@ -7,15 +7,16 @@
 
 import { Observable, combineLatest } from 'rxjs';
 import { ApiInterfaceRx } from '@polkadot/api/types';
-import { AccountId, AccountStatistics, PowerSize, DocumentPowerInfo} from '@polkadot/types/interfaces';
+import { AccountId, AccountStatistics, PowerSize, DocumentPowerInfo } from '@polkadot/types/interfaces';
 import { map, switchMap } from 'rxjs/operators';
 import { memo } from '../util';
-import { Bytes, u32 } from '@polkadot/types';
+import { Bytes, u32, bool } from '@polkadot/types';
 import { DeriveCommodityPower, DeriveDocumentPower } from '../types';
 import { u8aToString } from '@polkadot/util';
 
 function retriveSingleStatistics (api: ApiInterfaceRx, account: AccountId | string): Observable<AccountStatistics> {
   const kp = api.query.kp;
+
   return kp.accountStatisticsMap<AccountStatistics>(account).pipe(
     map((info): AccountStatistics => {
       return info;
@@ -23,11 +24,18 @@ function retriveSingleStatistics (api: ApiInterfaceRx, account: AccountId | stri
   );
 }
 
-function retriveCommodityPower(api: ApiInterfaceRx, appId: u32, commodityId: Bytes):
-  Observable<DeriveCommodityPower> {
-  return api.rpc.kp.commodityPower<PowerSize>({appId, cartId: commodityId}).pipe(
-    map((power: PowerSize): DeriveCommodityPower => {
-      return {appId, commodityId: u8aToString(commodityId), power}
+function retriveCommodityPower (api: ApiInterfaceRx, appId: u32, cartId: Bytes): Observable<DeriveCommodityPower> {
+  return combineLatest([
+    api.rpc.kp.commodityPower<PowerSize>({ appId, cartId }),
+    api.rpc.kp.isCommodityInBlackList<bool>({ appId, cartId })
+  ]).pipe(
+    map(([power, isSlashed]) => {
+      return {
+        appId,
+        commodityId: u8aToString(cartId),
+        isSlashed,
+        power
+      };
     })
   );
 }

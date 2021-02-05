@@ -62,6 +62,22 @@ export default {
       type: 'PowerSize'
     },
 
+    isCommodityInBlackList: {
+      description: 'Check if commodify knowledge power in black list.',
+      params: [
+        {
+          name: 'query',
+          type: 'QueryCommodityPowerParams'
+        },
+        {
+          name: 'at',
+          type: 'Hash',
+          isOptional: true
+        }
+      ],
+      type: 'bool'
+    },
+
     documentPower: {
       description: 'Get document knowledge power.',
       params: [

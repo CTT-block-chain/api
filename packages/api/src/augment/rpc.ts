@@ -175,6 +175,10 @@ declare module '@polkadot/rpc-core/types.jsonrpc' {
        **/
       documentPower: AugmentedRpc<(query: QueryDocumentPowerParams | { appId?: any; docId?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<DocumentPowerInfo>>;
       /**
+       * Check if commodify knowledge power in black list.
+       **/
+      isCommodityInBlackList: AugmentedRpc<(query: QueryCommodityPowerParams | { appId?: any; cartId?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<bool>>;
+      /**
        * Check if commodify knowledge power exist.
        **/
       isCommodityPowerExist: AugmentedRpc<(query: QueryCommodityPowerParams | { appId?: any; cartId?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<bool>>;
