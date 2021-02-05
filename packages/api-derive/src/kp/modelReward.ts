@@ -9,7 +9,7 @@ import BN from 'bn.js';
 import { Observable, combineLatest, of } from 'rxjs';
 import { ApiInterfaceRx } from '@polkadot/api/types';
 import { ModelCycleIncomeReward, ModelIncomeCurrentStageRPC, KPModelDataOf } from '@polkadot/types/interfaces';
-import { DeriveModelRewardRecords, DeriveModelCycleRewardTime, DeriveModelData } from '../types';
+import { DeriveModelRewardRecords, DeriveModelCycleRewardTime, DeriveModelData, DeriveModelReward } from '../types';
 import { map, switchMap } from 'rxjs/operators';
 import { memo } from '../util';
 import { u8aToString } from '@polkadot/util';
@@ -110,5 +110,32 @@ export function modelCycleRewardStage (instanceId: string, api: ApiInterfaceRx):
 export function allModels (instanceId: string, api: ApiInterfaceRx): () => Observable<DeriveModelData[]> {
   return memo(instanceId, (): Observable<DeriveModelData[]> => {
     return modelList(api);
+  });
+}
+
+export function modelCycleRewardIndex (instanceId: string, api: ApiInterfaceRx): () => Observable<number[]> {
+  return memo(instanceId, (): Observable<number[]> => {
+    return api.query.kp.modelCycleIncomeRewardStore.keys().pipe(
+      map((keys) => {
+        return keys.map((item) => Number(item.args[0].toString()));
+      })
+    );
+  });
+}
+
+export function modelCycleReward (instanceId: string, api: ApiInterfaceRx): (index: number) => Observable<DeriveModelReward[]> {
+  return memo(instanceId, (index: number): Observable<DeriveModelReward[]> => {
+    return api.query.kp.modelCycleIncomeRewardStore(index).pipe(
+      map((result): DeriveModelReward[] => {
+        return result.map((item) => {
+          return {
+            account: item.account,
+            appId: item.appId,
+            modelId: u8aToString(item.modelId),
+            reward: item.reward.toHuman()
+          };
+        });
+      })
+    );
   });
 }

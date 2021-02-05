@@ -45,6 +45,13 @@ export interface DeriveModelRewardRecords {
   rewards: string[];
 }
 
+export interface DeriveModelReward {
+  account: AccountId;
+  appId: u32;
+  modelId: string;
+  reward: string;
+}
+
 export interface DeriveModelCycleRewardTime {
   stage: u8;
   leftSeconds: number;
