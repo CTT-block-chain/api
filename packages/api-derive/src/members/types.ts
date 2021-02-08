@@ -9,6 +9,7 @@ export interface DeriveAppInfo {
   appName: string,
   identityAccount: AccountId[],
   adminAccount: AccountId[],
+  platformExperts: AccountId[],
   returnRate: u32,
   stake: Balance
 }

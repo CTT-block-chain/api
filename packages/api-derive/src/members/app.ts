@@ -18,16 +18,19 @@ function retrieveApps (api: ApiInterfaceRx): Observable<DeriveAppInfos> {
         api.query.members.appAdmins.multi<Vec<AccountId>>(
           entries.map(([key]): u32 => key.args[0] as u32)),
         api.query.members.appKeys.multi<Vec<AccountId>>(
+          entries.map(([key]): u32 => key.args[0] as u32)),
+        api.query.members.appPlatformExpertMembers.multi<Vec<AccountId>>(
           entries.map(([key]): u32 => key.args[0] as u32))
       ])
     ),
-    map(([entries, admins, identities]) =>
+    map(([entries, admins, identities, experts]) =>
       entries.map(([key, appData], idx) => {
         return {
           adminAccount: admins[idx],
           appId: key.args[0] as u32,
           appName: u8aToString(appData.name),
           identityAccount: identities[idx],
+          platformExperts: experts[idx],
           returnRate: appData.returnRate,
           stake: appData.stake
         };
