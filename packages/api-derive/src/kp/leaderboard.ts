@@ -10,7 +10,7 @@ import { ApiInterfaceRx } from '@polkadot/api/types';
 import { map } from 'rxjs/operators';
 import { memo } from '../util';
 import { Bytes } from '@polkadot/types';
-import { DeriveLeaderboardKeys, DeriveLeaderboardQueryKey, DeriveLeaderboardData } from './types';
+import { DeriveLeaderboardKeys, DeriveLeaderboardQueryKey, DeriveLeaderboardData, DeriveLeaderboardKeyGroup } from './types';
 import { u8aToString } from '@polkadot/util';
 
 function retriveBoardKeys (api : ApiInterfaceRx): Observable<DeriveLeaderboardKeys> {
@@ -21,6 +21,52 @@ function retriveBoardKeys (api : ApiInterfaceRx): Observable<DeriveLeaderboardKe
       })
     )
   );
+}
+
+function groupKeys (keys: DeriveLeaderboardKeys, cycleBlocks: number): DeriveLeaderboardKeyGroup {
+  interface Dict {
+    [index: string]: DeriveLeaderboardKeys;
+  }
+
+  const result: DeriveLeaderboardKeyGroup = {
+    global: [],
+    models: []
+  };
+  const dictGlobal: Dict = {};
+  const dictModels: Dict = {};
+
+  keys.forEach((key) => {
+    const block = key[1];
+    const index = Math.floor(Number(block.toString()) / cycleBlocks).toString();
+    let dict = dictModels;
+
+    if (key[2] === '') {
+      // for global
+      dict = dictGlobal;
+    }
+
+    if (dict[index]) {
+      dict[index].push(key);
+    } else {
+      dict[index] = [key];
+    }
+  });
+
+  for (const index in dictGlobal) {
+    result.global.push({
+      index,
+      keys: dictGlobal[index]
+    });
+  }
+
+  for (const index in dictModels) {
+    result.models.push({
+      index,
+      keys: dictModels[index]
+    });
+  }
+
+  return result;
 }
 
 function retriveLeaderboard (api: ApiInterfaceRx, params: DeriveLeaderboardQueryKey): Observable<DeriveLeaderboardData> {
@@ -44,9 +90,11 @@ function retriveLeaderboard (api: ApiInterfaceRx, params: DeriveLeaderboardQuery
   );
 }
 
-export function leaderboardKeys (intanceId: string, api: ApiInterfaceRx): () => Observable<DeriveLeaderboardKeys> {
-  return memo(intanceId, (): Observable<DeriveLeaderboardKeys> => {
-    return retriveBoardKeys(api);
+export function leaderboardKeys (intanceId: string, api: ApiInterfaceRx): () => Observable<DeriveLeaderboardKeyGroup> {
+  return memo(intanceId, (): Observable<DeriveLeaderboardKeyGroup> => {
+    return retriveBoardKeys(api).pipe(
+      map((result) => groupKeys(result, Number(api.consts.kp.appLeaderBoardInterval.toString())))
+    );
   });
 }
 

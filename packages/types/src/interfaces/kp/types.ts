@@ -230,6 +230,14 @@ export interface CommodityLeaderBoardData extends Struct {
   readonly owner: AccountId;
 }
 
+/** @name CommoditySlashRecord */
+export interface CommoditySlashRecord extends Struct {
+  readonly appId: u32;
+  readonly commentId: Bytes;
+  readonly cartId: Bytes;
+  readonly block: BlockNumber;
+}
+
 /** @name CommodityTypeData */
 export interface CommodityTypeData extends Struct {
   readonly typeId: u32;
@@ -426,6 +434,15 @@ export interface ModelCycleIncomeReward extends Struct {
   readonly appId: u32;
   readonly modelId: Bytes;
   readonly reward: BalanceOf;
+}
+
+/** @name ModelDisputeRecord */
+export interface ModelDisputeRecord extends Struct {
+  readonly appId: u32;
+  readonly modelId: Bytes;
+  readonly commentId: Bytes;
+  readonly disputeType: ModelDisputeType;
+  readonly block: BlockNumber;
 }
 
 /** @name ModelDisputeType */

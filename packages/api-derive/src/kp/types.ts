@@ -23,6 +23,16 @@ export type DeriveLeaderboardQueryKey = [u32, BlockNumber, string];
 
 export type DeriveLeaderboardKeys = DeriveLeaderboardQueryKey[];
 
+export interface DeriveLeaderboardCycle {
+  index: string;
+  keys: DeriveLeaderboardKeys;
+}
+
+export interface DeriveLeaderboardKeyGroup {
+  global: DeriveLeaderboardCycle[];
+  models: DeriveLeaderboardCycle[];
+}
+
 export interface DeriveLeaderBoardItem {
   commodityId: string;
   power: PowerSize;

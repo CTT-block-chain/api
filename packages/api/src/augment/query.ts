@@ -14,7 +14,7 @@ import type { VoteThreshold } from '@polkadot/types/interfaces/elections';
 import type { SetId, StoredPendingChange, StoredState } from '@polkadot/types/interfaces/grandpa';
 import type { RegistrarInfo, Registration } from '@polkadot/types/interfaces/identity';
 import type { AuthIndex } from '@polkadot/types/interfaces/imOnline';
-import type { AccountStatistics, AppData, AppFinancedData, AppFinancedUserExchangeData, AuthAccountId, CommentMaxRecord, CommentWeightData, CommodityLeaderBoardData, CommodityTypeData, DocumentPower, KPCommentAccountRecord, KPCommentDataOf, KPDocumentDataOf, KPModelCreateDataMax, KPModelDataOf, KPProductChooseDataMax, KPProductIdentifyRateMax, KPProductPublishRateMax, KPProductTryRateMax, LeaderBoardResult, ModelCycleIncomeReward, PowerSize, StableExchangeData, TechFundWithdrawData } from '@polkadot/types/interfaces/kp';
+import type { AccountStatistics, AppData, AppFinancedData, AppFinancedUserExchangeData, AuthAccountId, CommentMaxRecord, CommentWeightData, CommodityLeaderBoardData, CommoditySlashRecord, CommodityTypeData, DocumentPower, KPCommentAccountRecord, KPCommentDataOf, KPDocumentDataOf, KPModelCreateDataMax, KPModelDataOf, KPProductChooseDataMax, KPProductIdentifyRateMax, KPProductPublishRateMax, KPProductTryRateMax, LeaderBoardResult, ModelCycleIncomeReward, ModelDisputeRecord, PowerSize, StableExchangeData, TechFundWithdrawData } from '@polkadot/types/interfaces/kp';
 import type { DeferredOffenceOf, Kind, OffenceDetails, OpaqueTimeSlot, ReportIdOf } from '@polkadot/types/interfaces/offences';
 import type { ProxyAnnouncement, ProxyDefinition } from '@polkadot/types/interfaces/proxy';
 import type { ActiveRecovery, RecoveryConfig } from '@polkadot/types/interfaces/recovery';
@@ -414,6 +414,7 @@ declare module '@polkadot/api/types/storage' {
       authServers: AugmentedQuery<ApiType, () => Observable<Vec<AccountId>>> & QueryableStorageEntry<ApiType>;
       commentMaxInfoPerAccountMap: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<CommentMaxRecord>> & QueryableStorageEntry<ApiType>;
       commentMaxInfoPerDocMap: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<CommentMaxRecord>> & QueryableStorageEntry<ApiType>;
+      commoditySlashRecords: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<CommoditySlashRecord>> & QueryableStorageEntry<ApiType>;
       commodityTypeMap: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<Bytes>> & QueryableStorageEntry<ApiType>;
       commodityTypeSets: AugmentedQuery<ApiType, () => Observable<Vec<CommodityTypeData>>> & QueryableStorageEntry<ApiType>;
       documentChooseMaxParams: AugmentedQuery<ApiType, (arg: u32 | AnyNumber | Uint8Array) => Observable<KPProductChooseDataMax>> & QueryableStorageEntry<ApiType>;
@@ -443,6 +444,7 @@ declare module '@polkadot/api/types/storage' {
       modelCycleIncomeRewardRecords: AugmentedQueryDoubleMap<ApiType, (key1: BlockNumber | AnyNumber | Uint8Array, key2: Hash | string | Uint8Array) => Observable<BalanceOf>> & QueryableStorageEntry<ApiType>;
       modelCycleIncomeRewardStore: AugmentedQuery<ApiType, (arg: BlockNumber | AnyNumber | Uint8Array) => Observable<Vec<ModelCycleIncomeReward>>> & QueryableStorageEntry<ApiType>;
       modelCycleIncomeTotal: AugmentedQuery<ApiType, (arg: BlockNumber | AnyNumber | Uint8Array) => Observable<u64>> & QueryableStorageEntry<ApiType>;
+      modelDisputeRecords: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<ModelDisputeRecord>> & QueryableStorageEntry<ApiType>;
       modelFirstTypeBenefitRecord: AugmentedQuery<ApiType, (arg: Hash | string | Uint8Array) => Observable<bool>> & QueryableStorageEntry<ApiType>;
       modelIncomeRewardTotal: AugmentedQuery<ApiType, () => Observable<BalanceOf>> & QueryableStorageEntry<ApiType>;
       modelPreBlackList: AugmentedQuery<ApiType, () => Observable<Vec<ITuple<[u32, Bytes, AccountId, BlockNumber]>>>> & QueryableStorageEntry<ApiType>;

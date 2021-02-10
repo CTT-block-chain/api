@@ -679,6 +679,21 @@ export default {
     QueryModelParams: {
       appId: 'u32',
       modelId: 'Bytes'
+    },
+
+    CommoditySlashRecord: {
+      appId: 'u32',
+      commentId: 'Vec<u8>',
+      cartId: 'Vec<u8>',
+      block: 'BlockNumber'
+    },
+
+    ModelDisputeRecord: {
+      appId: 'u32',
+      modelId: 'Bytes',
+      commentId: 'Bytes',
+      disputeType: 'ModelDisputeType',
+      block: 'BlockNumber'
     }
   }
 } as Definitions;
