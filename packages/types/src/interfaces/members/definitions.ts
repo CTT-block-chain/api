@@ -79,6 +79,22 @@ export default {
         }
       ],
       type: 'Vec<AccountId>'
+    },
+
+    modelCreator: {
+      description: 'load model creator account',
+      params: [
+        {
+          name: 'query',
+          type: 'QueryModelExpertParams'
+        },
+        {
+          name: 'at',
+          type: 'Hash',
+          isOptional: true
+        }
+      ],
+      type: 'AccountId'
     }
   },
 

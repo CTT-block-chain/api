@@ -101,3 +101,24 @@ export interface DeriveAccountFinanceRecord {
   maxAmount: string;
   actuallyAmount: string;
 }
+
+export interface DeriveModelDisputeSummary {
+  total: number;
+  lv0Count: number;
+  lv1Count: number;
+  lv2Count: number;
+}
+
+export interface DeriveModelDisputeData {
+  appId: string;
+  account: string;
+  modelId: string;
+  lv0Count: number;
+  lv1Count: number;
+  lv2Count: number;
+}
+
+export interface DeriveModelDispute {
+  summary: DeriveModelDisputeSummary;
+  data: DeriveModelDisputeData[];
+}

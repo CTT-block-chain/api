@@ -221,6 +221,10 @@ declare module '@polkadot/rpc-core/types.jsonrpc' {
        **/
       isPlatformExpert: AugmentedRpc<(account: AccountId | string | Uint8Array, query: QueryPlatformExpertParams | { appId?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<bool>>;
       /**
+       * load model creator account
+       **/
+      modelCreator: AugmentedRpc<(query: QueryModelExpertParams | { appId?: any; modelId?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<AccountId>>;
+      /**
        * load model expert accounts
        **/
       modelExperts: AugmentedRpc<(query: QueryModelExpertParams | { appId?: any; modelId?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<Vec<AccountId>>>;

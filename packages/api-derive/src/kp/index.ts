@@ -6,3 +6,4 @@ export * from './accountStatistics';
 export * from './leaderboard';
 export * from './modelReward';
 export * from './appFinance';
+export * from './modelDispute';
