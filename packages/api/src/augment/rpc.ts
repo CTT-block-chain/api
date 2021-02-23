@@ -13,7 +13,7 @@ import type { ContractCallRequest, ContractExecResult } from '@polkadot/types/in
 import type { CreatedBlock } from '@polkadot/types/interfaces/engine';
 import type { Extrinsic } from '@polkadot/types/interfaces/extrinsics';
 import type { EncodedFinalityProofs, JustificationNotification, ReportedRoundStates } from '@polkadot/types/interfaces/grandpa';
-import type { AppFinanceDataRPC, AppFinanceExchangeDataParams, AppFinanceExchangeDataRPC, AppFinanceRecordParams, DocumentPowerInfo, LeaderBoardResult, ModelIncomeCurrentStageRPC, PowerSize, QueryCommodityPowerParams, QueryDocumentPowerParams, QueryLeaderBoardParams, QueryModelExpertParams, QueryModelParams, QueryPlatformExpertParams, StakeToVoteParams, StakeToVoteResult } from '@polkadot/types/interfaces/kp';
+import type { AppFinanceDataRPC, AppFinanceExchangeDataParams, AppFinanceExchangeDataRPC, AppFinanceRecordParams, AppIncomeDataRPC, AppIncomeExchangeDataParams, AppIncomeRecordParams, DocumentPowerInfo, LeaderBoardResult, ModelIncomeCurrentStageRPC, PowerSize, QueryCommodityPowerParams, QueryDocumentPowerParams, QueryLeaderBoardParams, QueryModelExpertParams, QueryModelParams, QueryPlatformExpertParams, StakeToVoteParams, StakeToVoteResult } from '@polkadot/types/interfaces/kp';
 import type { StorageKind } from '@polkadot/types/interfaces/offchain';
 import type { RuntimeDispatchInfo } from '@polkadot/types/interfaces/payment';
 import type { RpcMethods } from '@polkadot/types/interfaces/rpc';
@@ -166,6 +166,18 @@ declare module '@polkadot/rpc-core/types.jsonrpc' {
        * get app finance record.
        **/
       appFinanceRecord: AugmentedRpc<(params: AppFinanceRecordParams | { appId?: any; proposalId?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<AppFinanceDataRPC>>;
+      /**
+       * get app income exchange record accounts.
+       **/
+      appIncomeExchangeAccounts: AugmentedRpc<(params: AppIncomeRecordParams | { appId?: any; cycle?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<Vec<AccountId>>>;
+      /**
+       * get app income exchange data.
+       **/
+      appIncomeExchangeData: AugmentedRpc<(params: AppIncomeExchangeDataParams | { appId?: any; cycle?: any; account?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<AppFinanceExchangeDataRPC>>;
+      /**
+       * get app cycle income record.
+       **/
+      appIncomeRecord: AugmentedRpc<(params: AppIncomeRecordParams | { appId?: any; cycle?: any } | string | Uint8Array, at?: Hash | string | Uint8Array) => Observable<AppIncomeDataRPC>>;
       /**
        * Get commodify knowledge power.
        **/

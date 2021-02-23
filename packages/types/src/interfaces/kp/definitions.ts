@@ -216,6 +216,54 @@ export default {
         }
       ],
       type: 'u64'
+    },
+
+    appIncomeRecord: {
+      description: 'get app cycle income record.',
+      params: [
+        {
+          name: 'params',
+          type: 'AppIncomeRecordParams'
+        },
+        {
+          name: 'at',
+          type: 'Hash',
+          isOptional: true
+        }
+      ],
+      type: 'AppIncomeDataRPC'
+    },
+
+    appIncomeExchangeAccounts: {
+      description: 'get app income exchange record accounts.',
+      params: [
+        {
+          name: 'params',
+          type: 'AppIncomeRecordParams'
+        },
+        {
+          name: 'at',
+          type: 'Hash',
+          isOptional: true
+        }
+      ],
+      type: 'Vec<AccountId>'
+    },
+
+    appIncomeExchangeData: {
+      description: 'get app income exchange data.',
+      params: [
+        {
+          name: 'params',
+          type: 'AppIncomeExchangeDataParams'
+        },
+        {
+          name: 'at',
+          type: 'Hash',
+          isOptional: true
+        }
+      ],
+      type: 'AppFinanceExchangeDataRPC'
     }
   },
 
@@ -694,6 +742,50 @@ export default {
       commentId: 'Bytes',
       disputeType: 'ModelDisputeType',
       block: 'BlockNumber'
+    },
+
+    AppIncomeCycleRecord: {
+      initial: 'BalanceOf',
+      balance: 'BalanceOf',
+      cycle: 'BlockNumber',
+      appId: 'u32',
+      income: 'u64'
+    },
+
+    AppIncomeRecordParams: {
+      appId: 'u32',
+      cycle: 'BlockNumber'
+    },
+
+    AppIncomeExchangeDataParams: {
+      appId: 'u32',
+      cycle: 'BlockNumber',
+      account: 'AccountId'
+    },
+
+    AppIncomeRedeemParams: {
+      account: 'AccountId',
+      appId: 'u32',
+      cycle: 'BlockNumber',
+      exchangeAmount: 'BalanceOf'
+    },
+
+    AppIncomeRedeemConfirmParams: {
+      account: 'AccountId',
+      appId: 'u32',
+      payId: 'Vec<u8>',
+      cycle: 'BlockNumber'
+    },
+
+    DisableModelParams: {
+      app_id: 'u32',
+      model_id: 'Vec<u8>'
+    },
+
+    AppIncomeDataRPC: {
+      app_id: 'u32',
+      cycle: 'BlockNumber',
+      income: 'u64'
     }
   }
 } as Definitions;

@@ -89,12 +89,23 @@ export interface DeriveAppFinanceCountInfo {
   totalBurn: string;
 }
 
+export interface DeriveAppCycleIncomeCountInfo {
+  count: u32;
+  totalBurn: string;
+}
+
 export interface DeriveAppFinanceRecord {
   appId: u32;
   block: BlockNumber;
   proposalId: string;
   amount: Balance;
   totalBalance: Balance;
+}
+
+export interface DeriveAppCycleIncomeRecord {
+  appId: u32;
+  cycle: BlockNumber;
+  income: string;
 }
 
 export interface DeriveAccountFinanceRecord {

@@ -109,6 +109,51 @@ export interface AppFinanceRecordParams extends Struct {
   readonly proposalId: Bytes;
 }
 
+/** @name AppIncomeCycleRecord */
+export interface AppIncomeCycleRecord extends Struct {
+  readonly initial: BalanceOf;
+  readonly balance: BalanceOf;
+  readonly cycle: BlockNumber;
+  readonly appId: u32;
+  readonly income: u64;
+}
+
+/** @name AppIncomeDataRPC */
+export interface AppIncomeDataRPC extends Struct {
+  readonly app_id: u32;
+  readonly cycle: BlockNumber;
+  readonly income: u64;
+}
+
+/** @name AppIncomeExchangeDataParams */
+export interface AppIncomeExchangeDataParams extends Struct {
+  readonly appId: u32;
+  readonly cycle: BlockNumber;
+  readonly account: AccountId;
+}
+
+/** @name AppIncomeRecordParams */
+export interface AppIncomeRecordParams extends Struct {
+  readonly appId: u32;
+  readonly cycle: BlockNumber;
+}
+
+/** @name AppIncomeRedeemConfirmParams */
+export interface AppIncomeRedeemConfirmParams extends Struct {
+  readonly account: AccountId;
+  readonly appId: u32;
+  readonly payId: Bytes;
+  readonly cycle: BlockNumber;
+}
+
+/** @name AppIncomeRedeemParams */
+export interface AppIncomeRedeemParams extends Struct {
+  readonly account: AccountId;
+  readonly appId: u32;
+  readonly cycle: BlockNumber;
+  readonly exchangeAmount: BalanceOf;
+}
+
 /** @name AppKeyManageParams */
 export interface AppKeyManageParams extends Struct {
   readonly admin: AuthAccountId;
@@ -242,6 +287,12 @@ export interface CommoditySlashRecord extends Struct {
 export interface CommodityTypeData extends Struct {
   readonly typeId: u32;
   readonly typeDesc: Bytes;
+}
+
+/** @name DisableModelParams */
+export interface DisableModelParams extends Struct {
+  readonly app_id: u32;
+  readonly model_id: Bytes;
 }
 
 /** @name DocumentPower */

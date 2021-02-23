@@ -213,6 +213,9 @@ declare module '@polkadot/api/types/consts' {
       documentTryWeightTrueRate: u8 & AugmentedConst<ApiType>;
       kptExchangeMinRate: Permill & AugmentedConst<ApiType>;
       modelCreateDeposit: BalanceOf & AugmentedConst<ApiType>;
+      modelIncomeCollectingPeriod: BlockNumber & AugmentedConst<ApiType>;
+      modelIncomeCyclePeriod: BlockNumber & AugmentedConst<ApiType>;
+      modelIncomeRewardingPeriod: BlockNumber & AugmentedConst<ApiType>;
       topWeightAccountAttend: u8 & AugmentedConst<ApiType>;
       topWeightAccountStake: u8 & AugmentedConst<ApiType>;
       topWeightDocumentIdentify: u8 & AugmentedConst<ApiType>;
