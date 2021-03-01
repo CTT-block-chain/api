@@ -628,7 +628,9 @@ export default {
 
     DocumentPowerInfo: {
       docType: 'DocumentType',
-      power: 'PowerSize'
+      power: 'PowerSize',
+      isExist: 'bool',
+      isSlashed: 'bool'
     },
 
     AccountStatistics: {
@@ -786,6 +788,11 @@ export default {
       app_id: 'u32',
       cycle: 'BlockNumber',
       income: 'u64'
+    },
+
+    ModelKeyParams: {
+      appId: 'u32',
+      modelId: 'Vec<u8>'
     }
   }
 } as Definitions;

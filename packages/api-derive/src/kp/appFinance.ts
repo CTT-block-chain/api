@@ -148,3 +148,9 @@ export function accountFinanceRecord (instanceId: string, api: ApiInterfaceRx): 
     return accountRecord(api, account, appId, proposalId);
   });
 }
+
+export function financeGroup (instanceId: string, api: ApiInterfaceRx): () => Observable<AccountId[]> {
+  return memo(instanceId, (): Observable<AccountId[]> => api.query.members.financeMembers().pipe(
+    map((result) => result))
+  );
+}

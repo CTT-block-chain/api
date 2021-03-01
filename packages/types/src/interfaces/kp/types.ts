@@ -306,6 +306,8 @@ export interface DocumentPower extends Struct {
 export interface DocumentPowerInfo extends Struct {
   readonly docType: DocumentType;
   readonly power: PowerSize;
+  readonly isExist: bool;
+  readonly isSlashed: bool;
 }
 
 /** @name DocumentSpecificData */
@@ -534,6 +536,12 @@ export interface ModelIncomeCollectingParam extends Struct {
 export interface ModelIncomeCurrentStageRPC extends Struct {
   readonly stage: u8;
   readonly left: BlockNumber;
+}
+
+/** @name ModelKeyParams */
+export interface ModelKeyParams extends Struct {
+  readonly appId: u32;
+  readonly modelId: Bytes;
 }
 
 /** @name ModelStatus */
