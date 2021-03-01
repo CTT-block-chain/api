@@ -142,3 +142,21 @@ export function accountAppIncomeRecord (instanceId: string, api: ApiInterfaceRx)
     return accountRecord(api, account, appId, cycle);
   });
 }
+
+export function currentIssuance (instanceId: string, api: ApiInterfaceRx): () => Observable<BN> {
+  return memo(instanceId, (): Observable<BN> => {
+    return combineLatest([
+      api.query.balances.totalIssuance(),
+      api.query.system.account(TREASURY_ACCOUNT),
+      api.query.system.account(TRMODEL_ACCOUNT),
+      api.query.system.account(ACMODEL_ACCOUNT),
+      api.query.system.account(TECHNOLOGY_ACCOUNT)
+    ]).pipe(
+      map(([total, f1, f2, f3, f4]): BN => {
+        const result = total.sub(f1.data.free).sub(f2.data.free).sub(f3.data.free).sub(f4.data.free);
+
+        return result;
+      })
+    );
+  });
+}
