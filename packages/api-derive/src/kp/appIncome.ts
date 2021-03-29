@@ -153,6 +153,7 @@ export function currentIssuance (instanceId: string, api: ApiInterfaceRx): () =>
       api.query.system.account(TECHNOLOGY_ACCOUNT)
     ]).pipe(
       map(([total, f1, f2, f3, f4]): BN => {
+        console.log(`currentIssuance: ${total.toString()}`);
         const result = total.sub(f1.data.free).sub(f2.data.free).sub(f3.data.free).sub(f4.data.free);
 
         return result;

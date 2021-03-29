@@ -50,7 +50,7 @@ function queryCurrentBlock (api: ApiInterfaceRx): Observable<number> {
   );
 }
 
-function lastFinanceLeft (api: ApiInterfaceRx): Observable<number> {
+function lastFinanceLeft (api: ApiInterfaceRx): Observable<[number, number]> {
   return api.query.kp.appFinancedLast().pipe(
     switchMap((hash) =>
       combineLatest(
@@ -60,12 +60,17 @@ function lastFinanceLeft (api: ApiInterfaceRx): Observable<number> {
     ),
     map(([financeData, currentBlock]) => {
       const end = Number(financeData.exchangeEndBlock.toString());
+      const financePeriad = Math.round(Number(api.consts.kp.appFinanceExchangePeriod.toString()) / 2);
 
-      if (end > 0 && currentBlock < end) {
+      if (currentBlock <= end) {
         // we are in current exchange stage
-        return (end - currentBlock) * 6;
+        return [1, (end - currentBlock) * 6];
+      } else if (currentBlock <= end + financePeriad) {
+        return [2, (end + financePeriad - currentBlock) * 6];
+      } else if (currentBlock <= end + financePeriad * 2) {
+        return [3, (end + financePeriad * 2 - currentBlock) * 6];
       } else {
-        return 0;
+        return [0, 0];
       }
     })
   );
@@ -76,10 +81,11 @@ function countInfo (api: ApiInterfaceRx): Observable<DeriveAppFinanceCountInfo> 
     api.query.kp.appFinancedCount(),
     api.query.kp.appFinancedBurnTotal(),
     lastFinanceLeft(api)
-  ]).pipe(map(([count, total, leftSeconds]) => {
+  ]).pipe(map(([count, total, left]) => {
     return {
       count,
-      leftSeconds,
+      leftSeconds: left[1],
+      stage: left[0],
       totalBurn: total.toHuman()
     };
   }));

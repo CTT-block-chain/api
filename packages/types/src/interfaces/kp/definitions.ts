@@ -793,6 +793,11 @@ export default {
     ModelKeyParams: {
       appId: 'u32',
       modelId: 'Vec<u8>'
+    },
+
+    FinanceMemberParams: {
+      deposit: 'BalanceOf',
+      member: 'AccountId'
     }
   }
 } as Definitions;

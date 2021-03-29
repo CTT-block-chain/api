@@ -334,6 +334,12 @@ export interface DocumentType extends Enum {
   readonly isUnknown: boolean;
 }
 
+/** @name FinanceMemberParams */
+export interface FinanceMemberParams extends Struct {
+  readonly deposit: BalanceOf;
+  readonly member: AccountId;
+}
+
 /** @name KPCommentAccountRecord */
 export interface KPCommentAccountRecord extends Struct {
   readonly count: PowerSize;

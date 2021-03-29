@@ -86,6 +86,7 @@ export interface DeriveUserExchanges {
 export interface DeriveAppFinanceCountInfo {
   count: u32;
   leftSeconds: number;
+  stage: number; // 0: not in any valid stage, 1: exchange requesting, 2: confirming, 3: compensating
   totalBurn: string;
 }
 

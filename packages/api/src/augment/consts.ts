@@ -184,6 +184,7 @@ declare module '@polkadot/api/types/consts' {
     };
     kp: {
       [key: string]: Codec;
+      appFinanceExchangePeriod: BlockNumber & AugmentedConst<ApiType>;
       appLeaderBoardInterval: BlockNumber & AugmentedConst<ApiType>;
       cmPowerAccountAttend: u8 & AugmentedConst<ApiType>;
       commentCmPowerWeightCost: u8 & AugmentedConst<ApiType>;
