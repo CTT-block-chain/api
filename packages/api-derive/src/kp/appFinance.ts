@@ -45,8 +45,8 @@ function queryAppFinanceRecord (api: ApiInterfaceRx, hash: Hash): Observable<App
 }
 
 function queryCurrentBlock (api: ApiInterfaceRx): Observable<number> {
-  return api.rpc.chain.getHeader().pipe(
-    map((header) => Number(header.number.toString()))
+  return api.derive.chain.bestNumber().pipe(
+    map((best) => Number(best.toString()))
   );
 }
 
